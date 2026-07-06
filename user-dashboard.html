@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Stackly User Dashboard" />
+    <title>Stackly - User Dashboard</title>
+    <link rel="icon" type="image/webp" href="./assets/logo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --red-primary: #dc143c;
+        --red-dark: #8b0000;
+        --red-light: #ff6b6b;
+        --bg-dark: #0c0c0e;
+        --bg-card: #1a1a1f;
+        --bg-input: #25252b;
+        --text: #f5f5f5;
+        --text-muted: #a0a0b0;
+        --border: rgba(255, 255, 255, 0.06);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --sidebar-width: 240px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        background: var(--bg-card);
+        border-right: 1px solid var(--border);
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        z-index: 50;
+        transition: transform 0.3s ease;
+      }
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+      }
+      .sidebar-logo img {
+        width: 32px;
+        height: 32px;
+        filter: drop-shadow(0 0 6px var(--red-primary));
+      }
+      .sidebar-logo span {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        background: linear-gradient(
+          135deg,
+          var(--red-light),
+          var(--red-primary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+      }
+      .nav-links li a {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 1rem;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .nav-links li a:hover,
+      .nav-links li a.active {
+        background: var(--red-primary);
+        color: white;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* Main content */
+      .main {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: 2rem;
+        width: calc(100% - var(--sidebar-width));
+      }
+
+      /* Top bar with logo outside sidebar */
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        background: var(--bg-card);
+        padding: 1rem 1.5rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+      .top-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .top-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .top-logo img {
+        width: 36px;
+        height: 36px;
+        filter: drop-shadow(0 0 8px var(--red-primary));
+      }
+      .top-logo span {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        background: linear-gradient(
+          135deg,
+          var(--red-light),
+          var(--red-primary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 3px;
+        background: var(--text);
+        border-radius: 2px;
+        display: block;
+      }
+      .btn-logout {
+        background: transparent;
+        border: 2px solid var(--red-primary);
+        color: var(--red-primary);
+        padding: 0.6rem 1.5rem;
+        border-radius: 999px;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-logout:hover {
+        background: var(--red-primary);
+        color: white;
+      }
+
+      .section-content {
+        display: none;
+      }
+      .section-content.active {
+        display: block;
+      }
+
+      .welcome-card {
+        background: linear-gradient(
+          135deg,
+          var(--red-primary),
+          var(--red-dark)
+        );
+        padding: 2rem;
+        border-radius: var(--radius);
+        margin-bottom: 2rem;
+        color: white;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .card {
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: transform 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+      }
+      .card-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .card h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+      .card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* Transaction list */
+      .transaction-list {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        margin-top: 2rem;
+      }
+      .transaction-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+      }
+      .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .transaction-info p:first-child {
+        font-weight: 600;
+      }
+      .transaction-info p:last-child {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+      .transaction-amount.positive {
+        color: #4caf50;
+      }
+      .transaction-amount.negative {
+        color: var(--red-light);
+      }
+
+      /* Quick actions */
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .quick-action {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.2rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .quick-action:hover {
+        border-color: var(--red-primary);
+        transform: translateY(-2px);
+      }
+      .quick-action span {
+        font-size: 1.8rem;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          box-shadow: 5px 0 20px rgba(0, 0, 0, 0.4);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+          width: 100%;
+        }
+        .hamburger {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div
+        class="sidebar-logo"
+        onclick="window.location.href = 'index.html'"
+        style="cursor: pointer"
+      >
+        <img
+          src="stacklylogo (3).webp"
+          alt="Stackly Logo"
+          width="32"
+          height="32"
+        />
+        <span>Stackly</span>
+      </div>
+      <ul class="nav-links">
+        <li><a data-section="dashboard" class="active">📊 Dashboard</a></li>
+        <li><a data-section="accounts">💳 Accounts</a></li>
+        <li><a data-section="transactions">📈 Transactions</a></li>
+        <li><a data-section="settings">⚙️ Settings</a></li>
+      </ul>
+      <div class="sidebar-footer">© 2026 Stackly</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Top bar with logo outside sidebar -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="hamburger" id="menuToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div
+            class="top-logo"
+            onclick="window.location.href = 'index.html'"
+            style="cursor: pointer"
+          >
+            <img
+              src="stacklylogo (3).webp"
+              alt="Stackly Logo"
+              width="36"
+              height="36"
+            />
+            <span>Stackly</span>
+          </div>
+        </div>
+        <div>
+          <span style="color: var(--text-muted); font-size: 0.9rem"
+            >Welcome, <strong id="userEmailDisplay">User</strong></span
+          >
+        </div>
+        <button class="btn-logout" id="logoutBtn">Logout</button>
+      </div>
+
+      <!-- Dashboard Section -->
+      <div class="section-content active" id="section-dashboard">
+        <div class="welcome-card">
+          <h2 style="font-family: &quot;Space Grotesk&quot;, sans-serif">
+            💰 Financial Overview
+          </h2>
+          <p>
+            Your total net worth: <strong>$24,500.00</strong> – up 8.2% this
+            month.
+          </p>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+          <div class="quick-action">
+            <span>💸</span>
+            <p>Send Money</p>
+          </div>
+          <div class="quick-action">
+            <span>📥</span>
+            <p>Deposit</p>
+          </div>
+          <div class="quick-action">
+            <span>💱</span>
+            <p>Exchange</p>
+          </div>
+          <div class="quick-action">
+            <span>📊</span>
+            <p>Invest</p>
+          </div>
+        </div>
+
+        <!-- Account cards -->
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">💵</div>
+            <h3>$12,200</h3>
+            <p>Checking Account</p>
+            <small style="color: var(--red-light)">+2.4% this week</small>
+          </div>
+          <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>$8,300</h3>
+            <p>Savings Account</p>
+            <small style="color: #4caf50">2.1% APY</small>
+          </div>
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <h3>$4,000</h3>
+            <p>Investment Portfolio</p>
+            <small style="color: var(--red-light)">+5.7% YTD</small>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="transaction-list">
+          <div class="transaction-header">📋 Recent Transactions</div>
+          <div class="transaction-item">
+            <div class="transaction-info">
+              <p>Spotify Subscription</p>
+              <p>Apr 12, 2026</p>
+            </div>
+            <div class="transaction-amount negative">-$9.99</div>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-info">
+              <p>Salary Deposit</p>
+              <p>Apr 10, 2026</p>
+            </div>
+            <div class="transaction-amount positive">+$4,200.00</div>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-info">
+              <p>Amazon Purchase</p>
+              <p>Apr 8, 2026</p>
+            </div>
+            <div class="transaction-amount negative">-$127.45</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accounts Section -->
+      <div class="section-content" id="section-accounts">
+        <div class="card">
+          <div class="card-icon">💳</div>
+          <h3>Linked Accounts</h3>
+          <p>Manage your bank accounts, credit cards, and digital wallets.</p>
+        </div>
+      </div>
+
+      <!-- Transactions Section -->
+      <div class="section-content" id="section-transactions">
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Transaction History</h3>
+          <p>Filter and view all past transactions with detailed analytics.</p>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div class="section-content" id="section-settings">
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Profile & Security</h3>
+          <p>Update personal information, change password, and manage 2FA.</p>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const userData = JSON.parse(localStorage.getItem("finvault_user"));
+        if (!userData || userData.role !== "user") {
+          window.location.href = "login.html";
+          return;
+        }
+        document.getElementById("userEmailDisplay").textContent =
+          userData.email;
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("finvault_user");
+          window.location.href = "index.html";
+        });
+
+        const sidebar = document.getElementById("sidebar");
+        document.getElementById("menuToggle").addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+        });
+
+        const navLinks = document.querySelectorAll(".nav-links a");
+        const sections = document.querySelectorAll(".section-content");
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            navLinks.forEach((l) => l.classList.remove("active"));
+            link.classList.add("active");
+            const targetId = "section-" + link.getAttribute("data-section");
+            sections.forEach((s) => s.classList.remove("active"));
+            document.getElementById(targetId).classList.add("active");
+            sidebar.classList.remove("open");
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
