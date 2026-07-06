@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly Digital Banking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#fff;color:#111;overflow-x:hidden;}
+
+/* ================= TOP BAR ================= */
+/* TOP WHITE BAR */
+.top-bar{
+position:sticky;
+top:0;
+z-index:1100; /* above navbar */
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+height:60px;
+padding:0 30px;
+
+background:#fff;
+border-bottom:1px solid #eee;
+}
+
+/* RED NAVBAR */
+.navbar{
+position:sticky;
+top:60px;              /* ⭐ IMPORTANT (height of top-bar) */
+z-index:1000;
+
+background:#d90429;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 30px;
+}
+
+/* ONLY LOGO SIZE CHANGES */
+.logo img{
+height:auto;
+width:150px;
+display:block;
+}
+
+/* ================= NAVBAR ================= */
+
+
+/* circle nav */
+.nav-links{display:flex;gap:18px;align-items:center;}
+.nav-links li{list-style:none;position:relative;}
+
+.nav-links a{
+color:#fff;
+text-decoration:none;
+padding:9px 17px;
+border-radius:50px;
+transition:.25s;
+font-size:14px;
+}
+
+.nav-links a:hover{background:#fff;color:#d90429;}
+
+/* dropdown */
+.dropdown-menu{
+position:absolute;
+top:40px;
+left:0;
+background:#fff;
+min-width:200px;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
+}
+
+.dropdown-parent:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.dropdown-menu a{display:block;padding:12px;color:#333;}
+.dropdown-menu a:hover{background:#f2f2f2;color:#d90429;}
+
+.nav-cta a{
+background:#111;
+color:#fff;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+}
+.mobile-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+border-bottom:1px solid #eee;
+}
+
+.mobile-link{
+text-decoration:none;
+color:#222;
+font-weight:600;
+}
+
+.drop-icon{
+cursor:pointer;
+font-size:18px;
+padding:6px 10px;
+transition:.3s;
+}
+
+.drop-icon.rotate{
+transform:rotate(180deg);
+}
+
+.mobile-sub{
+display:none;
+background:#f7f7f7;
+padding-left:20px;
+}
+
+.mobile-sub a{
+display:block;
+padding:10px 0;
+text-decoration:none;
+color:#555;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:26px;height:3px;background:#fff;}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu{
+position:fixed;
+inset:0;
+background:#1b1b1b;
+transform:translateX(-100%);
+transition:.4s;
+z-index:2000;
+overflow-y:auto;
+padding-bottom:40px;
+}
+.mobile-menu.active{transform:translateX(0);}
+
+.mobile-menu a,.mobile-item{
+display:block;
+padding:18px 28px;
+color:#fff;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-decoration:none;
+}
+
+.mobile-sub{display:none;background:#222;}
+.mobile-sub a{font-size:17px;padding-left:45px;color:#ccc;}
+
+.close-btn{position:absolute;top:18px;right:25px;font-size:30px;color:#fff;cursor:pointer;}
+
+/* SOCIAL */
+.mobile-social{
+padding:25px;
+text-align:center;
+}
+.mobile-social h4{color:#fff;margin-bottom:12px;}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:14px;
+margin-bottom:20px;
+}
+.social-icons a{
+width:36px;height:36px;
+background:#fff;
+color:#d90429;
+display:flex;align-items:center;justify-content:center;
+border-radius:50%;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* APP DOWNLOAD */
+.app-download{text-align:center;color:#fff;}
+.store-btns img{width:140px;margin:6px 0;}
+
+/* QR */
+.qr img{width:90px;margin-top:10px;border-radius:6px;}
+
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.nav-links,.nav-cta{display:none;}
+.hamburger{display:flex;}
+
+.hero{height:65vh;}
+
+.hero-content{
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+padding:0 20px;
+}
+
+.hero-content h1{font-size:30px;}
+
+.store-btns img{width:120px;}
+.qr img{width:80px;}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="logo">
+<img src="stacklylogo (3).webp">
+</div>
+<div>stackly@bank.com</div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<ul class="nav-links">
+<li class="dropdown-parent">
+<a href="home.html">Home ▾</a>
+<div class="dropdown-menu">
+<a href="index.html">Home1</a>
+
+</div>
+</li>
+<li><a href="carrers.html">career</a></li>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="featues.html">Features</a></li>
+<li><a href="deposits.html">Deposits</a></li>
+
+</ul>
+
+<div class="nav-cta">
+<a href="login1.html">Login</a>
+</div>
+
+<div class="hamburger" onclick="openMenu()">
+<span></span><span></span><span></span>
+</div>
+
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<div class="close-btn" onclick="closeMenu()">✕</div>
+
+<div class="mobile-item">
+
+  <a href="home.html" class="mobile-link">Home</a>
+
+  <span class="drop-icon" onclick="toggleDrop(this)">▾</span>
+
+</div>
+
+<div class="mobile-sub">
+  <a href="index.html">Home1</a>
+</div>
+
+
+<a href="carrers.html">career</a>
+<a href="blog.html">Blog</a>
+<a href="featues.html">Features</a>
+<a href="deposits.html">Deposits</a>
+<a href="login1.html">Login</a>
+
+
+<!-- SOCIAL -->
+<div class="mobile-social">
+<h4>Follow Us</h4>
+<div class="social-icons">
+<a href="4041.html">f</a>
+<a href="4041.html">X</a>
+<a href="4041.html">in</a>
+<a href="4041.html">▶</a>
+</div>
+
+<div class="app-download">
+<h4>Download App</h4>
+<div class="store-btns">
+<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+</div>
+
+<div class="qr">
+<img src="qrcode.webp">
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+<script>
+function openMenu(){document.getElementById("mobileMenu").classList.add("active");}
+function closeMenu(){document.getElementById("mobileMenu").classList.remove("active");}
+function toggleDrop(el){let next=el.nextElementSibling;next.style.display=next.style.display==="block"?"none":"block";}
+
+/* typing title */
+const text="Stackly Banking Services";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,45);
+}}
+type();
+function toggleDrop(icon){
+  const submenu = icon.parentElement.nextElementSibling;
+
+  submenu.style.display =
+    submenu.style.display === "block" ? "none" : "block";
+
+  icon.classList.toggle("rotate");
+}
+
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{background:#f4f6fb;color:#222}
+
+/* ================= HERO ================= */
+.hero{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+padding:0 8%;
+color:white;
+overflow:hidden;
+}
+
+.hero video{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(45%);
+z-index:-2;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,rgba(139,0,0,.85),rgba(196,0,0,.65));
+z-index:-1;
+}
+
+.hero-content{max-width:650px;}
+.hero-content h1{font-size:52px;margin-bottom:15px;}
+.hero-content p{margin-bottom:25px;color:#ffeaea;line-height:1.6}
+
+.buttons a{
+display:inline-block;
+padding:14px 28px;
+margin-right:12px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+.primary{background:white;color:#8b0000;}
+.secondary{border:2px solid white;color:white;}
+.primary:hover{background:#ffdede}
+.secondary:hover{background:white;color:#8b0000}
+
+/* ================= GENERAL ================= */
+.container{max-width:1150px;margin:auto;padding:90px 20px;}
+.title{text-align:center;font-size:34px;color:#8b0000;margin-bottom:40px;}
+
+/* arrow button */
+.arrow{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:42px;height:42px;
+border-radius:50%;
+background:#c40000;
+color:white;
+text-decoration:none;
+margin-top:15px;
+transition:.3s;
+}
+.arrow:hover{transform:translateX(6px);background:#8b0000}
+
+/* ================= WHO WE ARE ================= */
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+.about img{
+width:100%;
+border-radius:18px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+/* ================= IMPACT ================= */
+.impact{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+}
+.impact-box{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+text-align:center;
+padding-bottom:15px;
+}
+.impact-box img{width:100%;height:160px;object-fit:cover;}
+.impact-box h2{color:#c40000;margin:15px 0 5px;font-size:30px;}
+.impact-box p{color:#555;padding:0 12px}
+
+/* ================= PROMISES ================= */
+.promises{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+.promise{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+padding-bottom:15px;
+}
+.promise img{width:100%;height:180px;object-fit:cover;}
+.promise .text{padding:18px;}
+.promise:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(196,0,0,.25);}
+
+/* ================= AD ================= */
+.ad{
+background:white;
+border-radius:18px;
+overflow:hidden;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+box-shadow:0 20px 40px rgba(0,0,0,.12);
+}
+.ad img{width:100%;height:100%;object-fit:cover;}
+.ad .content{padding:40px;}
+.ad a.btn{
+display:inline-block;margin-top:15px;
+background:#c40000;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;
+}
+
+/* ================= SCROLL ANIMATIONS ================= */
+.reveal{opacity:0;transition:all .9s cubic-bezier(.2,.65,.3,1);}
+.left{transform:translateX(-70px);}
+.right{transform:translateX(70px);}
+.up{transform:translateY(70px);}
+.show{opacity:1;transform:translate(0,0);}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+.hero{padding-top:120px;text-align:center;justify-content:center}
+.hero-content h1{font-size:32px}
+.about{grid-template-columns:1fr}
+.impact{grid-template-columns:1fr 1fr}
+.promises{grid-template-columns:1fr}
+.ad{grid-template-columns:1fr}
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+<video autoplay muted loop playsinline>
+<source src="WhatsApp Video 2025-11-27 at 8.08.14 PM.mp4" type="video/mp4">
+</video>
+
+<div class="hero-content reveal up">
+<h1>Careers at Stackly Bank</h1>
+<p>
+At Stackly, we are building a digital banking ecosystem powered by AI and cloud technology.
+Our mission is to simplify banking, improve financial accessibility and create secure
+services for millions of customers worldwide.
+We hire innovators, developers, designers and problem-solvers who want to make real impact.
+</p>
+<div class="buttons">
+<a href="4041.html" class="primary">Upload Resume</a>
+<a href="4041.html" class="secondary">Answer Questions</a>
+</div>
+</div>
+</section>
+
+<!-- WHO WE ARE -->
+
+<div class="container">
+<h2 class="title reveal up">Who We Are</h2>
+
+<div class="about">
+<img class="reveal left" src="pav10.webp">
+
+<div class="reveal right">
+<p>
+Stackly Digital Bank combines banking expertise with advanced technology. Our platform supports
+instant account opening, secure payments, smart analytics and customer-centric support systems.
+Employees work in a collaborative culture where learning, innovation and leadership development
+are encouraged.
+<br><br>
+We believe in transparency, inclusion and equal opportunities. Every team member contributes
+to product development, customer success and financial innovation.
+</p>
+
+<a class="arrow" href="4041.html">→</a>
+
+</div>
+</div>
+</div>
+
+<!-- IMPACT -->
+
+<div class="container">
+<h2 class="title reveal up">Our Impact</h2>
+
+<div class="impact">
+
+<div class="impact-box reveal up">
+<img src="hero1.webp">
+<h2>5M+</h2>
+<p>Customers trust Stackly for secure and reliable digital banking services.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+
+<div class="impact-box reveal up">
+<img src="hero2.webp">
+<h2>120+</h2>
+<p>Professional team members across engineering, operations and customer success.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+
+<div class="impact-box reveal up">
+<img src="pav5.webp">
+<h2>24/7</h2>
+<p>AI powered support system available to assist customers anytime.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+
+<div class="impact-box reveal up">
+<img src="upi.webp">
+<h2>99.9%</h2>
+<p>Reliable infrastructure ensuring uninterrupted banking operations.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+
+</div>
+</div>
+
+<!-- PROMISES -->
+
+<div class="container">
+<h2 class="title reveal up">Our Promises</h2>
+
+<div class="promises">
+
+<div class="promise reveal left">
+<img src="hr13.webp">
+<div class="text">
+<h3>Career Growth</h3>
+<p>Continuous learning programs, certifications and internal promotions.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+</div>
+
+<div class="promise reveal up">
+<img src="hero3.webp">
+<div class="text">
+<h3>Flexible Work</h3>
+<p>Hybrid work culture with flexible schedules and work-life balance.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+</div>
+
+<div class="promise reveal right">
+<img src="senior.webp">
+<div class="text">
+<h3>Health Benefits</h3>
+<p>Medical insurance, wellness programs and employee support services.</p>
+<a class="arrow" href="4041.html">→</a>
+</div>
+</div>
+
+</div>
+</div>
+<!-- JOB OPENINGS -->
+
+<section class="section">
+<h2 class="title">Current Openings</h2>
+
+<div class="jobs">
+
+<div class="job">
+<h3>Associate Software Engineer</h3>
+<p>Location: Bangalore</p>
+<p>Skills: HTML, CSS, JavaScript, API basics</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+<div class="job">
+<h3>Customer Support Executive</h3>
+<p>Location: Hyderabad</p>
+<p>Skills: Communication, Banking Process</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+<div class="job">
+<h3>Digital Marketing Executive</h3>
+<p>Location: Remote</p>
+<p>Skills: SEO, Social Media, Ads</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+<div class="job">
+<h3>Loan Processing Officer</h3>
+<p>Location: Chennai</p>
+<p>Skills: Loan documentation & verification</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+<div class="job">
+<h3>UI/UX Designer</h3>
+<p>Location: Pune</p>
+<p>Skills: Figma, UX Research</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+<div class="job">
+<h3>Fraud Analyst</h3>
+<p>Location: Mumbai</p>
+<p>Skills: Risk monitoring & banking security</p>
+<a class="apply" href="4041.html">Apply Now</a>
+</div>
+
+</div>
+<style>
+  .form-box input, .form-box textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+.form-box input:focus, .form-box textarea:focus{
+border-color:#d90429;
+outline:none;
+box-shadow:0 0 5px rgba(217,4,41,.3);
+}
+
+.submit{
+width:100%;
+padding:12px;
+background:#d90429;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.submit:hover{
+background:#000;
+}
+</style>
+<style>
+  * JOB CARDS */
+.jobs{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+.job{
+background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+transition:.4s;
+opacity:0;
+transform:translateY(60px);
+}
+.job.show{opacity:1;transform:translateY(0)}
+.job:hover{transform:translateY(-6px)}
+.job h3{color:#d90429;margin-bottom:10px}
+.job p{color:#555;margin-bottom:15px}
+
+.apply{
+padding:10px 18px;border-radius:25px;
+background:#d90429;color:white;text-decoration:none;
+display:inline-block;
+}
+
+/* APPLY FORM */
+.form-box{
+max-width:600px;
+margin:70px auto 0;
+background:white;
+padding:35px;
+border-radius:16px;
+box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+.form-box input,.form-box textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+.submit{
+background:#d90429;color:white;
+padding:12px;border:none;border-radius:25px;
+width:100%;cursor:pointer;
+}
+
+/* HR BOX */
+.hr{
+margin-top:70px;
+background:#111;color:white;
+padding:40px;border-radius:16px;text-align:center;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.jobs{grid-template-columns:repeat(2,1fr)}
+.hero h1{font-size:32px}
+}
+@media(max-width:600px){
+.jobs{grid-template-columns:1fr}
+.section{padding:60px 6%}
+}
+</style>
+
+</head>
+
+<body>
+
+
+</style>
+<!-- APPLY FORM -->
+<div id="apply" class="form-box">
+<h2 style="text-align:center;margin-bottom:20px;">Apply for a Job</h2>
+
+<form id="jobForm">
+
+<input type="text" id="fullname" placeholder="Full Name" required>
+
+<input type="email" id="email" placeholder="Email Address" required>
+
+<input type="tel" id="phone" placeholder="Phone Number (10 digits)" maxlength="10" required>
+
+<input type="text" id="position" placeholder="Position Applying For" required>
+
+<!-- file optional now -->
+<input type="file" id="resume" accept=".pdf,.doc,.docx">
+
+<textarea id="message" rows="4" placeholder="Why should we hire you?" required></textarea>
+
+<button class="submit">Apply Now</button>
+
+</form>
+</div>
+
+<!-- HR DETAILS -->
+
+<div class="section">
+<div class="hr">
+<h2>HR Contact</h2>
+<p>Email: careers@stacklybank.com</p>
+<p>Working Hours: Mon – Fri | 9:30 AM – 6:30 PM</p>
+<p>We will review your resume and contact shortlisted candidates.</p>
+</div>
+</div>
+
+</section>
+
+<script>
+/* SCROLL REVEAL */
+const jobs=document.querySelectorAll(".job");
+window.addEventListener("scroll",()=>{
+let trigger=window.innerHeight*0.85;
+jobs.forEach(j=>{
+if(j.getBoundingClientRect().top<trigger){
+j.classList.add("show");
+}
+});
+});
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+
+/* NAME ONLY LETTERS */
+document.getElementById("fullname").addEventListener("input", function(){
+this.value = this.value.replace(/[^a-zA-Z ]/g,'');
+});
+
+/* PHONE ONLY DIGITS */
+document.getElementById("phone").addEventListener("input", function(){
+this.value = this.value.replace(/[^0-9]/g,'');
+});
+
+/* FORM SUBMIT VALIDATION */
+document.getElementById("jobForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+let phone = document.getElementById("phone").value.trim();
+
+if(phone.length !== 10){
+alert("Phone number must be exactly 10 digits");
+return;
+}
+
+/* success → redirect */
+window.location.href = "4041.html";
+
+});
+
+</script>
+<!-- AD -->
+
+<div class="container">
+<div class="ad reveal up">
+<img src="ales-nesetril-ex_p4AaBxbs-unsplash.webp">
+<div class="content">
+<h2>We Are Hiring Frontend Developers</h2>
+<p>
+Work with modern technologies including React, UI/UX design systems and AI-powered banking tools.
+Join a fast-growing fintech environment and build impactful products.
+</p>
+<a class="btn" href="4041.html">Apply Now</a>
+</div>
+</div>
+</div>
+
+<script>
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+observer.unobserve(entry.target);
+}
+});
+},{threshold:0.18});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* WRAPPER */
+#stkly-support-strip{
+  font-family:Poppins, sans-serif;
+  background:#f1f1f1;
+  padding:28px 15px;
+}
+
+/* GRID */
+.stkly-support-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* ITEM */
+.stkly-support-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:white;
+  padding:18px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#0b1c3d;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+/* HOVER */
+.stkly-support-box:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+/* ICON CIRCLE */
+.stkly-icon{
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#e63946,#b3001b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.stkly-text h4{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.stkly-text p{
+  font-size:13px;
+  color:#666;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .stkly-support-container{
+    grid-template-columns:1fr;
+  }
+
+  .stkly-support-box{
+    padding:16px;
+  }
+
+  .stkly-icon{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
+
+  .stkly-text h4{
+    font-size:16px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  <!-- FEEDBACK -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-note-sticky"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Add a note of appreciation</h4>
+      <p>Share your experience with our banking services</p>
+    </div>
+  </a>
+
+  <!-- SUPPORT -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-solid fa-phone"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Customer Support</h4>
+      <p>Talk with our 24/7 banking help desk</p>
+    </div>
+  </a>
+
+  <!-- BRANCH -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-map"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Locate nearest branch</h4>
+      <p>Find ATM & bank branches near you</p>
+    </div>
+  </a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+<style>
+/* ===== FOOTER ===== */
+#stackly-footer{
+  background:#c40000;
+  color:#e5e7eb;
+  padding-top:80px;
+  font-family:'Poppins',sans-serif;
+  margin-top: 30px;
+}
+
+/* CONTAINER */
+.stackly-footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 80px 60px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+/* LOGO IMAGE */
+.stackly-footer-logo img{
+  width:160px;
+  height:auto;
+  display:block;
+  margin-bottom:16px;
+  filter:brightness(0) invert(1); /* REMOVE if logo already white */
+}
+
+/* TEXT */
+.stackly-footer-col p{
+  font-size:15px;
+  line-height:1.7;
+  color:white;
+  margin-bottom:16px;
+}
+
+/* HEADINGS */
+.stackly-footer-col h3{
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+/* LINKS */
+.stackly-footer-col ul{
+  list-style:none;
+  padding:0;
+}
+
+.stackly-footer-col ul li{
+  margin-bottom:12px;
+}
+
+.stackly-footer-col ul li a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.stackly-footer-col ul li a:hover{
+  color:#ffffff;
+  padding-left:6px;
+}
+
+/* SOCIAL ICONS */
+.stackly-footer-social{
+  display:flex;
+  gap:14px;
+  margin-top:20px;
+}
+
+.stackly-footer-social a{
+  width:40px;
+  height:40px;
+  background:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.stackly-footer-social svg{
+  width:18px;
+  height:18px;
+  fill:blue;
+}
+
+.stackly-footer-social a:hover{
+  background:white;
+  transform:translateY(-4px);
+}
+
+.stackly-footer-social a:hover svg{
+  fill:#0284c7;
+}
+
+/* SUBSCRIBE */
+.stackly-footer-subscribe{
+  display:flex;
+  gap:10px;
+}
+
+.stackly-footer-subscribe input{
+  flex:1;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+
+.stackly-footer-subscribe button{
+  padding:12px 18px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  color:#0f172a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* CONTACT BAR */
+.stackly-footer-contactbar{
+  text-align:center;
+  padding:16px;
+  background:rgba(0,0,0,.25);
+}
+
+.stackly-footer-contactbar a{
+  color:white;
+  margin-left:6px;
+  text-decoration:none;
+}
+
+/* BOTTOM */
+.stackly-footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 80px;
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+}
+
+.stackly-footer-legal{
+  display:flex;
+  gap:20px;
+}
+
+.stackly-footer-legal a{
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+.stackly-footer-legal a:hover{
+  color:#ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stackly-footer-container{
+    grid-template-columns:1fr;
+    padding:0 32px 50px;
+  }
+
+  .stackly-footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    padding:16px 32px;
+  }
+
+  .stackly-footer-logo img{
+    width:140px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<footer id="stackly-footer">
+
+  <div class="stackly-footer-container">
+
+    <!-- LOGO + ABOUT -->
+    <div class="stackly-footer-col">
+      <div class="stackly-footer-logo">
+        <!-- CHANGE LOGO PATH -->
+       <a href="home.html"><img src="stacklylogo (3).webp" alt="Stackly Logo"></a> 
+      </div>
+
+      <p>
+        Delivering innovative digital solutions that empower
+        businesses to grow, scale, and succeed.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="stackly-footer-social">
+
+        <!-- FACEBOOK -->
+        <a href="4041.html" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+
+        <!-- TWITTER -->
+        <a href="4041.html" aria-label="Twitter">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.6 8.6 0 0 1-2.72 1.04A4.28 4.28 0 0 0 11.1 8.1a12.15 12.15 0 0 1-8.82-4.47 4.28 4.28 0 0 0 1.32 5.72A4.2 4.2 0 0 1 2 8.8v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 18.57 12.13 12.13 0 0 0 8.29 20.5c7.55 0 11.68-6.26 11.68-11.68v-.53A8.3 8.3 0 0 0 22.46 6z"/>
+          </svg>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="4041.html" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 8.98h4v12H3zM9 8.98h3.8v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.05 0 4.8 2.66 4.8 6.12v6.34h-4v-5.62c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.72H9z"/>
+          </svg>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="4041.html" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm4.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="stackly-footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+<li><a href="carrers.html">Career</a></li>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="featues.html">Features</a></li>
+<li><a href="deposits.html">Deposits</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="stackly-footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="4041.html">Banking </a></li>
+        <li><a href="4041.html">Mobile Banking</a></li>
+        <li><a href="4041.html">Payment Solutions</a></li>
+        <li><a href="4041.html">AI & Automation</a></li>
+        <li><a href="4041.html">Security</a></li>
+      </ul>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="stackly-footer-col">
+  <h3>Subscribe</h3>
+  <p>Get updates and insights delivered to your inbox.</p>
+
+  <form class="stackly-footer-subscribe" id="subscribeForm">
+    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="stackly-footer-contactbar">
+    Contact us: <a href="mailto:info@stackly.com">info@stackly.com</a>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="stackly-footer-bottom">
+    <span>© 2026 Stackly. All Rights Reserved.</span>
+    <div class="stackly-footer-legal">
+      <a href="4041.html">Privacy Policy</a>
+      <a href="4041.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+</footer>
+<script>
+
+document.getElementById("subscribeForm").addEventListener("submit", function(e){
+
+    // stop normal form submit (page refresh)
+    e.preventDefault();
+
+    var email = document.getElementById("subscribeEmail").value.trim();
+
+    // email validation
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email === ""){
+        alert("Please enter email address");
+        return;
+    }
+
+    if(emailPattern.test(email)){
+        // redirect to 404 page
+        window.location.href = "4041.html";
+    }
+    else{
+        alert("Enter valid email address");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

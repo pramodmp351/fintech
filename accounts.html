@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly Digital Banking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#fff;color:#111;overflow-x:hidden;}
+
+/* ================= TOP BAR ================= */
+/* TOP WHITE BAR */
+.top-bar{
+position:sticky;
+top:0;
+z-index:1100; /* above navbar */
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+height:60px;
+padding:0 30px;
+
+background:#fff;
+border-bottom:1px solid #eee;
+}
+
+/* RED NAVBAR */
+.navbar{
+position:sticky;
+top:60px;              /* ⭐ IMPORTANT (height of top-bar) */
+z-index:1000;
+
+background:#d90429;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 30px;
+}
+
+/* ONLY LOGO SIZE CHANGES */
+.logo img{
+height:auto;
+width:150px;
+display:block;
+}
+
+/* ================= NAVBAR ================= */
+
+/* circle nav */
+.nav-links{display:flex;gap:18px;align-items:center;}
+.nav-links li{list-style:none;position:relative;}
+
+.nav-links a{
+color:#fff;
+text-decoration:none;
+padding:9px 17px;
+border-radius:50px;
+transition:.25s;
+font-size:14px;
+}
+
+.nav-links a:hover{background:#fff;color:#d90429;}
+
+/* dropdown */
+.dropdown-menu{
+position:absolute;
+top:40px;
+left:0;
+background:#fff;
+min-width:200px;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
+}
+
+.dropdown-parent:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.dropdown-menu a{display:block;padding:12px;color:#333;}
+.dropdown-menu a:hover{background:#f2f2f2;color:#d90429;}
+
+.nav-cta a{
+background:#111;
+color:#fff;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+}
+.mobile-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+border-bottom:1px solid #eee;
+}
+
+.mobile-link{
+text-decoration:none;
+color:#222;
+font-weight:600;
+}
+
+.drop-icon{
+cursor:pointer;
+font-size:18px;
+padding:6px 10px;
+transition:.3s;
+}
+
+.drop-icon.rotate{
+transform:rotate(180deg);
+}
+
+.mobile-sub{
+display:none;
+background:#f7f7f7;
+padding-left:20px;
+}
+
+.mobile-sub a{
+display:block;
+padding:10px 0;
+text-decoration:none;
+color:#555;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:26px;height:3px;background:#fff;}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu{
+position:fixed;
+inset:0;
+background:#1b1b1b;
+transform:translateX(-100%);
+transition:.4s;
+z-index:2000;
+overflow-y:auto;
+padding-bottom:40px;
+}
+.mobile-menu.active{transform:translateX(0);}
+
+.mobile-menu a,.mobile-item{
+display:block;
+padding:18px 28px;
+color:#fff;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-decoration:none;
+}
+
+.mobile-sub{display:none;background:#222;}
+.mobile-sub a{font-size:17px;padding-left:45px;color:#ccc;}
+
+.close-btn{position:absolute;top:18px;right:25px;font-size:30px;color:#fff;cursor:pointer;}
+
+/* SOCIAL */
+.mobile-social{
+padding:25px;
+text-align:center;
+}
+.mobile-social h4{color:#fff;margin-bottom:12px;}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:14px;
+margin-bottom:20px;
+}
+.social-icons a{
+width:36px;height:36px;
+background:#fff;
+color:#d90429;
+display:flex;align-items:center;justify-content:center;
+border-radius:50%;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* APP DOWNLOAD */
+.app-download{text-align:center;color:#fff;}
+.store-btns img{width:140px;margin:6px 0;}
+
+/* QR */
+.qr img{width:90px;margin-top:10px;border-radius:6px;}
+
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.nav-links,.nav-cta{display:none;}
+.hamburger{display:flex;}
+
+.hero{height:65vh;}
+
+.hero-content{
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+padding:0 20px;
+}
+
+.hero-content h1{font-size:30px;}
+
+.store-btns img{width:120px;}
+.qr img{width:80px;}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="logo">
+<img src="stacklylogo (3).webp">
+</div>
+<div>stackly@bank.com</div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<ul class="nav-links">
+<li class="dropdown-parent">
+<a href="index.html">Home ▾</a>
+<div class="dropdown-menu">
+<a href="home.html">Home2</a>
+
+</div>
+</li>
+<li><a href="accounts.html">Accounts</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="cards.html">Cards</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="nav-cta">
+<a href="login.html">Login</a>
+</div>
+
+<div class="hamburger" onclick="openMenu()">
+<span></span><span></span><span></span>
+</div>
+
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<div class="close-btn" onclick="closeMenu()">✕</div>
+
+<div class="mobile-item">
+
+  <a href="index.html" class="mobile-link">Home</a>
+
+  <span class="drop-icon" onclick="toggleDrop(this)">▾</span>
+
+</div>
+
+<div class="mobile-sub">
+  <a href="home.html">Home2</a>
+</div>
+
+
+<a href="accounts.html">Accounts</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="services.html">Services</a>
+<a href="cards.html">Cards</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="login.html">Login</a>
+
+<!-- SOCIAL -->
+<div class="mobile-social">
+<h4>Follow Us</h4>
+<div class="social-icons">
+<a href="404.html">f</a>
+<a href="404.html">X</a>
+<a href="404.html">in</a>
+<a href="404.html">▶</a>
+</div>
+
+<div class="app-download">
+<h4>Download App</h4>
+<div class="store-btns">
+<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+</div>
+
+<div class="qr">
+<img src="qrcode.webp">
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+<script>
+function openMenu(){document.getElementById("mobileMenu").classList.add("active");}
+function closeMenu(){document.getElementById("mobileMenu").classList.remove("active");}
+function toggleDrop(el){let next=el.nextElementSibling;next.style.display=next.style.display==="block"?"none":"block";}
+
+/* typing title */
+const text="Stackly Banking Services";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,45);
+}}
+type();
+function toggleDrop(icon){
+  const submenu = icon.parentElement.nextElementSibling;
+
+  submenu.style.display =
+    submenu.style.display === "block" ? "none" : "block";
+
+  icon.classList.toggle("rotate");
+}
+
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{background:#f4f6fb;color:#222;overflow-x:hidden}
+
+/* HERO */
+.hero{
+background:linear-gradient(120deg,#8b0000,#c40000);
+color:white;text-align:center;
+padding:110px 20px 150px;
+position:relative;
+}
+.hero h1{font-size:46px;margin-bottom:10px;}
+.hero p{max-width:720px;margin:auto}
+
+.hero-img img{
+width:360px;
+max-width:95%;
+margin-top:40px;
+border-radius:18px;
+box-shadow:0 25px 50px rgba(0,0,0,.35);
+animation:float 5s ease-in-out infinite;
+}
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-18px)}
+100%{transform:translateY(0)}
+}
+
+.hero::after{
+content:"";
+position:absolute;
+bottom:-80px;left:0;width:100%;height:160px;
+background:#f4f6fb;border-radius:50% 50% 0 0;
+}
+
+.container{max-width:1150px;margin:auto;padding:90px 20px;}
+.title{text-align:center;font-size:34px;color:#8b0000;margin-bottom:40px;}
+
+/* OVERVIEW */
+.overview{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+.overview img{
+width:100%;
+border-radius:18px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+/* WHY CHOOSE */
+.why{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+.why-box{
+background:white;
+padding:25px;
+border-radius:14px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+}
+.why-box:hover{
+transform:translateY(-10px);
+box-shadow:0 18px 35px rgba(196,0,0,.25);
+}
+
+/* ACCOUNT CARDS WITH IMAGE */
+.accounts-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.acc-card{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.35s;
+}
+
+.acc-img{
+height:180px;
+overflow:hidden;
+}
+.acc-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.5s;
+}
+.acc-card:hover .acc-img img{
+transform:scale(1.1);
+}
+
+.acc-content{
+padding:22px;
+}
+.acc-content h3{color:#8b0000;margin-bottom:10px;}
+.acc-content p{font-size:14px;color:#555;margin-bottom:14px;}
+
+.arrow{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:38px;height:38px;
+border-radius:50%;
+background:#c40000;color:white;
+text-decoration:none;
+transition:.3s;
+}
+.arrow:hover{background:#8b0000;transform:translateX(6px);}
+
+/* INTEREST TABLE */
+.rate-table{
+background:white;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.rate-table table{width:100%;border-collapse:collapse;}
+.rate-table th{background:#8b0000;color:white;padding:15px;}
+.rate-table td{padding:14px;text-align:center;border-bottom:1px solid #eee;}
+
+/* AD BANNER */
+.ad{
+margin-top:60px;
+background:linear-gradient(120deg,#8b0000,#c40000);
+color:white;
+padding:70px 20px;
+text-align:center;
+border-radius:18px;
+}
+.ad a{
+display:inline-block;margin-top:15px;
+background:white;color:#8b0000;
+padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;
+}
+
+/* FAQ */
+.faq{max-width:800px;margin:auto}
+.faq-item{
+background:white;
+margin-bottom:12px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+.faq-question{padding:16px;cursor:pointer;font-weight:600;}
+.faq-answer{
+max-height:0;
+overflow:hidden;
+padding:0 16px;
+transition:max-height .4s ease;
+color:#555;
+}
+.faq-item.active .faq-answer{max-height:200px;padding:16px;}
+
+/* CONTACT */
+.contact{
+margin-top:70px;
+background:url("pav10.webp") center/cover;
+color:white;
+padding:90px 20px;
+text-align:center;
+border-radius:18px;
+position:relative;
+}
+.contact::before{
+content:"";
+position:absolute;inset:0;background:rgba(139,0,0,.75);
+border-radius:18px;
+}
+.contact .content{position:relative;z-index:2;}
+.contact a{
+display:inline-block;margin-top:15px;
+background:white;color:#8b0000;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(60px);transition:all .9s cubic-bezier(.2,.65,.3,1);}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:1000px){
+.overview{grid-template-columns:1fr;}
+.why{grid-template-columns:1fr 1fr;}
+.accounts-grid{grid-template-columns:1fr 1fr;}
+.hero h1{font-size:32px;}
+}
+@media(max-width:500px){
+.why,.accounts-grid{grid-template-columns:1fr;}
+}
+</style>
+
+</head>
+
+<body>
+
+<style>
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* HERO WRAPPER */
+#stkly-hero{
+  position:relative;
+  height:100vh;
+  width:100%;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+}
+
+/* VIDEO */
+#stkly-hero video{
+  position:absolute;
+  top:50%;
+  left:50%;
+  min-width:100%;
+  min-height:100%;
+  width:auto;
+  height:auto;
+  transform:translate(-50%,-50%);
+  object-fit:cover;
+  z-index:-2;
+}
+
+/* DARK OVERLAY */
+#stkly-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(5,10,25,.65),rgba(5,10,25,.85));
+  z-index:-1;
+}
+
+/* CONTENT */
+.stkly-hero-content{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  color:white;
+  padding:20px;
+}
+
+/* TITLE */
+.stkly-title{
+  font-size:52px;
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:18px;
+  animation:slideDown 1.2s ease;
+}
+
+/* PARAGRAPH */
+.stkly-desc{
+  max-width:650px;
+  font-size:18px;
+  line-height:1.6;
+  opacity:.95;
+  margin-bottom:30px;
+  animation:fadeIn 2s ease;
+}
+
+/* BUTTONS */
+.stkly-btns{
+  display:flex;
+  color: white;
+  gap:18px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.stkly-btn{
+  padding:14px 28px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:600;
+  transition:.3s;
+  border:2px solid white;
+}
+
+.stkly-primary{
+  background:#e63946;
+  border:none;
+}
+
+.stkly-primary:hover{
+  background:#ff4d6d;
+  transform:translateY(-3px);
+}
+
+.stkly-outline:hover{
+  background:white;
+  color:#0b1c3d;
+}
+
+/* ANIMATIONS */
+@keyframes slideDown{
+  from{transform:translateY(-40px);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .stkly-title{
+    font-size:32px;
+  }
+
+  .stkly-desc{
+    font-size:15px;
+  }
+
+  #stkly-hero{
+    height:92vh;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<section id="stkly-hero">
+
+  <!-- VIDEO BACKGROUND -->
+  <video autoplay muted loop playsinline>
+    <source src="20857-312437286_medium (1) .mp4" type="video/mp4">
+  </video>
+
+  <!-- CONTENT -->
+  <div class="stkly-hero-content">
+    <h1 class="stkly-title">Stackly Digital Banking</h1>
+
+    <p class="stkly-desc">
+      Secure, fast and AI powered banking services.  
+      Open accounts, transfer money, apply loans and manage cards instantly from anywhere.
+    </p>
+
+    <div class="stkly-btns">
+      <a href="404.html" class="stkly-btn stkly-primary">Open Account</a>
+      <a href="404.html" class="stkly-btn stkly-outline">Explore Services</a>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
+
+
+<!-- OVERVIEW -->
+
+<div class="container overview">
+<img class="reveal" src="andrea-de-santis-aOve8xFnjdM-unsplash.webp">
+<div class="reveal">
+<h2 class="title">Account Overview</h2>
+<p>Stackly savings account provides UPI payments, debit card, mobile banking and instant alerts with advanced security.<p>
+Stackly Digital Savings Account is a fully online banking solution designed for convenience,
+security and flexibility. Customers can open an account in minutes using Aadhaar and PAN
+verification without visiting a branch. The account provides UPI payments, NEFT/IMPS transfers,
+debit card access, mobile banking and real-time transaction alerts.
+
+With the Stackly mobile banking platform, customers can check balances, download statements,
+block or unblock cards, set spending limits and track expenses instantly. The system uses
+AI-based monitoring to detect unusual transactions and prevent fraud. All transactions are
+protected with multi-factor authentication and encrypted security protocols.
+
+The savings account is suitable for students, salaried employees, professionals and small
+business owners who want fast and paperless banking with 24/7 availability.
+</p>
+</p>
+</div>
+</div>
+
+<!-- WHY CHOOSE -->
+
+<div class="container">
+<h2 class="title reveal">Why Choose Stackly</h2>
+<div class="why">
+<div class="why-box reveal"><h3>Zero Balance</h3><p>No minimum balance requirement.<p>
+Stackly provides a zero minimum balance savings account so customers do not need to maintain
+any compulsory monthly balance. This makes banking accessible to students and new users who
+want to start saving without financial pressure.
+</p>
+</p></div>
+<div class="why-box reveal"><h3>Instant Activation</h3><p>Account opens within minutes.<p>
+The account is activated within minutes using secure digital KYC verification. After successful
+verification, customers immediately receive account number, IFSC code, UPI ID and virtual debit
+card to start transactions instantly.
+</p>
+</p></div>
+<div class="why-box reveal"><h3>Secure Banking</h3><p>Advanced encryption protection.<p>
+Stackly uses advanced security systems including 256-bit encryption, OTP verification,
+biometric login and AI fraud detection. Every transaction is monitored in real time to
+ensure safe and protected digital banking.
+</p>
+</p></div>
+</div>
+</div>
+
+<!-- ACCOUNT TYPES -->
+
+<div class="container">
+<h2 class="title reveal">Types of Savings Accounts</h2>
+
+<div class="accounts-grid">
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="nest.webp"></div>
+<div class="acc-content"><h3>Regular Savings</h3><p>Daily banking transactions & debit card.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="nest5.webp"></div>
+<div class="acc-content"><h3>Premium Savings</h3><p>Higher limits & cashback benefits.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="netbanking1webp.png"></div>
+<div class="acc-content"><h3>Student Account</h3><p>Zero balance account for students.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="salary (1).webp"></div>
+<div class="acc-content"><h3>Salary Account</h3><p>Exclusive employee banking benefits.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="senior.webp"></div>
+<div class="acc-content"><h3>Senior Citizen</h3><p>Higher interest rates and priority support.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+<div class="acc-card reveal">
+<div class="acc-img"><img src="pav5.webp"></div>
+<div class="acc-content"><h3>Kids Savings</h3><p>Secure savings account for children.</p><a class="arrow" href="404.html">→</a></div>
+</div>
+
+</div>
+</div>
+
+<!-- INTEREST RATE -->
+
+<div class="container">
+<h2 class="title reveal">Savings Account Interest Rates</h2>
+<div class="rate-table reveal">
+<table>
+<tr><th>Balance Slab</th><th>Interest Rate</th></tr>
+<tr><td>Below ₹1 Lakh</td><td>3.0%</td></tr>
+<tr><td>₹1L – ₹5L</td><td>3.5%</td></tr>
+<tr><td>₹5L – ₹10L</td><td>4.0%</td></tr>
+<tr><td>Above ₹10L</td><td>4.5%</td></tr>
+</table>
+</div>
+</div>
+
+<!-- AD -->
+
+<div class="container">
+<div class="ad reveal">
+<h2>Open Your Stackly Savings Account Today</h2>
+<p>Instant onboarding and free debit card.</p>
+<a href="404.html">Apply Now</a>
+</div>
+</div>
+
+<!-- FAQ -->
+
+<div class="container">
+<h2 class="title reveal">FAQs</h2>
+<div class="faq">
+<div class="faq-item reveal"><div class="faq-question">How to open an account?</div><div class="faq-answer">You can open online using Aadhaar & PAN verification.</div></div>
+<div class="faq-item reveal"><div class="faq-question">Is minimum balance required?</div><div class="faq-answer">No minimum balance required.</div></div>
+<div class="faq-item reveal"><div class="faq-question">Do I get debit card?</div><div class="faq-answer">Yes physical and virtual card provided.</div></div>
+</div>
+</div>
+
+<!-- CONTACT -->
+
+<div class="container">
+<div class="contact reveal">
+<div class="content">
+<h2>Need Help Opening an Account?</h2>
+<p>Our team is ready to assist you anytime.</p>
+<a href="404.html">Get in Touch</a>
+</div>
+</div>
+</div>
+
+<script>
+document.querySelectorAll(".faq-question").forEach(q=>{
+q.addEventListener("click",()=>q.parentElement.classList.toggle("active"));
+});
+
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+observer.unobserve(entry.target);
+}
+});
+},{threshold:0.18});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
+
+<style>
+
+/* ===== MAIN SLIDER ===== */
+#stacklyCardSlider{
+position:relative;
+height:85vh;
+min-height:600px;
+font-family:'Poppins',sans-serif;
+color:#fff;
+overflow:hidden;
+display:flex;
+align-items:center;
+}
+
+/* background */
+#stacklyCardSlider::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at 30% 40%,#2a2a2a,#000 70%);
+z-index:-1;
+}
+
+/* slides */
+#stacklyCardSlider .stack-slide{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 8%;
+opacity:0;
+transition:opacity .9s ease;
+}
+
+#stacklyCardSlider .stack-slide.active{
+opacity:1;
+}
+
+/* image */
+#stacklyCardSlider .stack-card{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+#stacklyCardSlider .stack-card img{
+width:420px;
+max-width:100%;
+height:auto;
+filter:drop-shadow(0 20px 40px rgba(0,0,0,.7));
+animation:float 5s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+100%{transform:translateY(0)}
+}
+
+/* text */
+#stacklyCardSlider .stack-content{
+flex:1;
+max-width:520px;
+}
+
+#stacklyCardSlider .stack-content h1{
+font-size:46px;
+margin-bottom:12px;
+line-height:1.2;
+}
+
+#stacklyCardSlider .stack-content p{
+color:#d0d0d0;
+margin-bottom:25px;
+font-size:16px;
+}
+
+/* button */
+#stacklyCardSlider .stack-btn{
+display:inline-block;
+padding:14px 28px;
+background:#fff;
+color:#000;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+#stacklyCardSlider .stack-btn:hover{
+background:#d90429;
+color:#fff;
+}
+
+/* dots */
+#stacklyCardSlider .stack-dots{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+}
+
+#stacklyCardSlider .stack-dot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:#777;
+cursor:pointer;
+}
+#stacklyCardSlider .stack-dot.active{background:#fff}
+
+/* ===== MOBILE PERFECT FIX ===== */
+@media (max-width:768px){
+
+#stacklyCardSlider{
+height:auto;
+padding:40px 10px 80px;
+min-height:auto;
+display:block;
+}
+
+/* slides vertical */
+#stacklyCardSlider .stack-slide{
+position:absolute;
+top:0;
+left:0;
+flex-direction:column;
+text-align:center;
+padding:10px;
+height:auto;
+}
+
+/* only active visible */
+#stacklyCardSlider .stack-slide.active{
+position:relative;
+}
+
+/* card */
+#stacklyCardSlider .stack-card img{
+width:220px;
+margin-top:10px;
+margin-bottom:15px;
+}
+
+/* text */
+#stacklyCardSlider .stack-content h1{
+font-size:24px;
+margin:10px 0;
+}
+
+#stacklyCardSlider .stack-content p{
+font-size:14px;
+padding:0 12px;
+}
+
+#stacklyCardSlider .stack-btn{
+padding:11px 22px;
+font-size:14px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<section id="stacklyCardSlider">
+
+<!-- Slide 1 -->
+<div class="stack-slide active">
+  <div class="stack-card">
+    <img src="cards3.webp">
+  </div>
+  <div class="stack-content">
+    <h1>Stackly Platinum Credit Card</h1>
+    <p>Enjoy cashback on online shopping, dining and bill payments worldwide.</p>
+    <a href="404.html" class="stack-btn">Explore Now</a>
+  </div>
+</div>
+
+<!-- Slide 2 -->
+<div class="stack-slide">
+  <div class="stack-card">
+    <img src="cards2.webp">
+  </div>
+  <div class="stack-content">
+    <h1>Travel Credit Card</h1>
+    <p>Zero forex markup and complimentary airport lounge access globally.</p>
+    <a href="404.html" class="stack-btn">Explore Now</a>
+  </div>
+</div>
+
+<!-- Slide 3 -->
+<div class="stack-slide">
+  <div class="stack-card">
+    <img src="cards.webp">
+  </div>
+  <div class="stack-content">
+    <h1>Rewards Credit Card</h1>
+    <p>Earn reward points on every purchase and redeem exciting gifts.</p>
+    <a href="404.html" class="stack-btn">Explore Now</a>
+  </div>
+</div>
+
+<!-- dots -->
+<div class="stack-dots">
+  <div class="stack-dot active"></div>
+  <div class="stack-dot"></div>
+  <div class="stack-dot"></div>
+</div>
+
+</section>
+
+<script>
+const slider=document.querySelector("#stacklyCardSlider");
+const slides=slider.querySelectorAll(".stack-slide");
+const dots=slider.querySelectorAll(".stack-dot");
+
+let index=0;
+
+function showSlide(i){
+slides.forEach(s=>s.classList.remove("active"));
+dots.forEach(d=>d.classList.remove("active"));
+
+slides[i].classList.add("active");
+dots[i].classList.add("active");
+index=i;
+}
+
+/* auto slide */
+setInterval(()=>{
+index++;
+if(index>=slides.length) index=0;
+showSlide(index);
+},4000);
+
+/* dot click */
+dots.forEach((dot,i)=>{
+dot.addEventListener("click",()=>showSlide(i));
+});
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* WRAPPER */
+#stkly-support-strip{
+  font-family:Poppins, sans-serif;
+  background:#f1f1f1;
+  padding:28px 15px;
+}
+
+/* GRID */
+.stkly-support-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* ITEM */
+.stkly-support-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:white;
+  padding:18px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#0b1c3d;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+/* HOVER */
+.stkly-support-box:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+/* ICON CIRCLE */
+.stkly-icon{
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#e63946,#b3001b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.stkly-text h4{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.stkly-text p{
+  font-size:13px;
+  color:#666;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .stkly-support-container{
+    grid-template-columns:1fr;
+  }
+
+  .stkly-support-box{
+    padding:16px;
+  }
+
+  .stkly-icon{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
+
+  .stkly-text h4{
+    font-size:16px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  <!-- FEEDBACK -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-note-sticky"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Add a note of appreciation</h4>
+      <p>Share your experience with our banking services</p>
+    </div>
+  </a>
+
+  <!-- SUPPORT -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-solid fa-phone"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Customer Support</h4>
+      <p>Talk with our 24/7 banking help desk</p>
+    </div>
+  </a>
+
+  <!-- BRANCH -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-map"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Locate nearest branch</h4>
+      <p>Find ATM & bank branches near you</p>
+    </div>
+  </a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+<style>
+/* ===== FOOTER ===== */
+#stackly-footer{
+  background:#c40000;
+  color:#e5e7eb;
+  padding-top:80px;
+  font-family:'Poppins',sans-serif;
+  margin-top: 30px;
+}
+
+/* CONTAINER */
+.stackly-footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 80px 60px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+/* LOGO IMAGE */
+.stackly-footer-logo img{
+  width:160px;
+  height:auto;
+  display:block;
+  margin-bottom:16px;
+  filter:brightness(0) invert(1); /* REMOVE if logo already white */
+}
+
+/* TEXT */
+.stackly-footer-col p{
+  font-size:15px;
+  line-height:1.7;
+  color:white;
+  margin-bottom:16px;
+}
+
+/* HEADINGS */
+.stackly-footer-col h3{
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+/* LINKS */
+.stackly-footer-col ul{
+  list-style:none;
+  padding:0;
+}
+
+.stackly-footer-col ul li{
+  margin-bottom:12px;
+}
+
+.stackly-footer-col ul li a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.stackly-footer-col ul li a:hover{
+  color:#ffffff;
+  padding-left:6px;
+}
+
+/* SOCIAL ICONS */
+.stackly-footer-social{
+  display:flex;
+  gap:14px;
+  margin-top:20px;
+}
+
+.stackly-footer-social a{
+  width:40px;
+  height:40px;
+  background:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.stackly-footer-social svg{
+  width:18px;
+  height:18px;
+  fill:blue;
+}
+
+.stackly-footer-social a:hover{
+  background:white;
+  transform:translateY(-4px);
+}
+
+.stackly-footer-social a:hover svg{
+  fill:#0284c7;
+}
+
+/* SUBSCRIBE */
+.stackly-footer-subscribe{
+  display:flex;
+  gap:10px;
+}
+
+.stackly-footer-subscribe input{
+  flex:1;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+
+.stackly-footer-subscribe button{
+  padding:12px 18px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  color:#0f172a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* CONTACT BAR */
+.stackly-footer-contactbar{
+  text-align:center;
+  padding:16px;
+  background:rgba(0,0,0,.25);
+}
+
+.stackly-footer-contactbar a{
+  color:white;
+  margin-left:6px;
+  text-decoration:none;
+}
+
+/* BOTTOM */
+.stackly-footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 80px;
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+}
+
+.stackly-footer-legal{
+  display:flex;
+  gap:20px;
+}
+
+.stackly-footer-legal a{
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+.stackly-footer-legal a:hover{
+  color:#ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stackly-footer-container{
+    grid-template-columns:1fr;
+    padding:0 32px 50px;
+  }
+
+  .stackly-footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    padding:16px 32px;
+  }
+
+  .stackly-footer-logo img{
+    width:140px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<footer id="stackly-footer">
+
+  <div class="stackly-footer-container">
+
+    <!-- LOGO + ABOUT -->
+    <div class="stackly-footer-col">
+      <div class="stackly-footer-logo">
+        <!-- CHANGE LOGO PATH -->
+       <a href="index.html"><img src="stacklylogo (3).webp" alt="Stackly Logo"></a> 
+      </div>
+
+      <p>
+        Delivering innovative digital solutions that empower
+        businesses to grow, scale, and succeed.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="stackly-footer-social">
+
+        <!-- FACEBOOK -->
+        <a href="404.html" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+
+        <!-- TWITTER -->
+        <a href="404.html" aria-label="Twitter">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.6 8.6 0 0 1-2.72 1.04A4.28 4.28 0 0 0 11.1 8.1a12.15 12.15 0 0 1-8.82-4.47 4.28 4.28 0 0 0 1.32 5.72A4.2 4.2 0 0 1 2 8.8v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 18.57 12.13 12.13 0 0 0 8.29 20.5c7.55 0 11.68-6.26 11.68-11.68v-.53A8.3 8.3 0 0 0 22.46 6z"/>
+          </svg>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="404.html" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 8.98h4v12H3zM9 8.98h3.8v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.05 0 4.8 2.66 4.8 6.12v6.34h-4v-5.62c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.72H9z"/>
+          </svg>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="404.html" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm4.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="stackly-footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+<li><a href="accounts.html">Accounts</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="cards.html">Cards</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="stackly-footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="404.html">Banking </a></li>
+        <li><a href="404.html">Mobile Banking</a></li>
+        <li><a href="404.html">Payment Solutions</a></li>
+        <li><a href="404.html">AI & Automation</a></li>
+        <li><a href="404.html">Security</a></li>
+      </ul>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="stackly-footer-col">
+  <h3>Subscribe</h3>
+  <p>Get updates and insights delivered to your inbox.</p>
+
+  <form class="stackly-footer-subscribe" id="subscribeForm">
+    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="stackly-footer-contactbar">
+    Contact us: <a href="mailto:info@stackly.com">info@stackly.com</a>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="stackly-footer-bottom">
+    <span>© 2026 Stackly. All Rights Reserved.</span>
+    <div class="stackly-footer-legal">
+      <a href="404.html">Privacy Policy</a>
+      <a href="404.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+</footer>
+<script>
+
+document.getElementById("subscribeForm").addEventListener("submit", function(e){
+
+    // stop normal form submit (page refresh)
+    e.preventDefault();
+
+    var email = document.getElementById("subscribeEmail").value.trim();
+
+    // email validation
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email === ""){
+        alert("Please enter email address");
+        return;
+    }
+
+    if(emailPattern.test(email)){
+        // redirect to 404 page
+        window.location.href = "404.html";
+    }
+    else{
+        alert("Enter valid email address");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly Digital Banking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#fff;color:#111;overflow-x:hidden;}
+
+/* ================= TOP BAR ================= */
+/* TOP WHITE BAR */
+.top-bar{
+position:sticky;
+top:0;
+z-index:1100; /* above navbar */
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+height:60px;
+padding:0 30px;
+
+background:#fff;
+border-bottom:1px solid #eee;
+}
+
+/* RED NAVBAR */
+.navbar{
+position:sticky;
+top:60px;              /* ⭐ IMPORTANT (height of top-bar) */
+z-index:1000;
+
+background:#d90429;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 30px;
+}
+/* ONLY LOGO SIZE CHANGES */
+.logo img{
+height:auto;
+width:150px;
+display:block;
+}
+
+/* ================= NAVBAR ================= */
+
+
+/* circle nav */
+.nav-links{display:flex;gap:18px;align-items:center;}
+.nav-links li{list-style:none;position:relative;}
+
+.nav-links a{
+color:#fff;
+text-decoration:none;
+padding:9px 17px;
+border-radius:50px;
+transition:.25s;
+font-size:14px;
+}
+
+.nav-links a:hover{background:#fff;color:#d90429;}
+
+/* dropdown */
+.dropdown-menu{
+position:absolute;
+top:40px;
+left:0;
+background:#fff;
+min-width:200px;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
+}
+
+.dropdown-parent:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.dropdown-menu a{display:block;padding:12px;color:#333;}
+.dropdown-menu a:hover{background:#f2f2f2;color:#d90429;}
+
+.nav-cta a{
+background:#111;
+color:#fff;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+}
+.mobile-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+border-bottom:1px solid #eee;
+}
+
+.mobile-link{
+text-decoration:none;
+color:#222;
+font-weight:600;
+}
+/* ===== STACKLY LOADER ===== */
+#stackly-loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:99999;
+transition:opacity .2s ease, visibility .2s;
+}
+
+/* rotating ring */
+.stackly-spinner{
+width:75px;
+height:75px;
+border-radius:50%;
+border:5px solid transparent;
+border-top:5px solid #ff2a3d;
+border-right:5px solid #d90429;
+animation:stackSpin 1s linear infinite;
+box-shadow:0 0 25px rgba(255,42,61,.8);
+}
+
+/* brand text */
+.stackly-text{
+color:#fff;
+margin-top:18px;
+font-size:22px;
+letter-spacing:4px;
+font-weight:600;
+animation:stackPulse 1.6s infinite;
+}
+
+/* animations */
+@keyframes stackSpin{
+0%{transform:rotate(0);}
+100%{transform:rotate(360deg);}
+}
+
+@keyframes stackPulse{
+0%,100%{opacity:.3;}
+50%{opacity:1;}
+}
+
+/* hide animation */
+#stackly-loader.hide{
+opacity:0;
+visibility:hidden;
+}
+.drop-icon{
+cursor:pointer;
+font-size:18px;
+padding:6px 10px;
+transition:.3s;
+}
+
+.drop-icon.rotate{
+transform:rotate(180deg);
+}
+
+.mobile-sub{
+display:none;
+background:#f7f7f7;
+padding-left:20px;
+}
+
+.mobile-sub a{
+display:block;
+padding:10px 0;
+text-decoration:none;
+color:#555;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:26px;height:3px;background:#fff;}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu{
+position:fixed;
+inset:0;
+background:#1b1b1b;
+transform:translateX(-100%);
+transition:.4s;
+z-index:2000;
+overflow-y:auto;
+padding-bottom:40px;
+}
+.mobile-menu.active{transform:translateX(0);}
+
+.mobile-menu a,.mobile-item{
+display:block;
+padding:18px 28px;
+color:#fff;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-decoration:none;
+}
+
+.mobile-sub{display:none;background:#222;}
+.mobile-sub a{font-size:17px;padding-left:45px;color:#ccc;}
+
+.close-btn{position:absolute;top:18px;right:25px;font-size:30px;color:#fff;cursor:pointer;}
+
+/* SOCIAL */
+.mobile-social{
+padding:25px;
+text-align:center;
+}
+.mobile-social h4{color:#fff;margin-bottom:12px;}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:14px;
+margin-bottom:20px;
+}
+.social-icons a{
+width:36px;height:36px;
+background:#fff;
+color:#d90429;
+display:flex;align-items:center;justify-content:center;
+border-radius:50%;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* APP DOWNLOAD */
+.app-download{text-align:center;color:#fff;}
+.store-btns img{width:140px;margin:6px 0;}
+
+/* QR */
+.qr img{width:90px;margin-top:10px;border-radius:6px;}
+
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.nav-links,.nav-cta{display:none;}
+.hamburger{display:flex;}
+
+.hero{height:65vh;}
+
+.hero-content{
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+padding:0 20px;
+}
+
+.hero-content h1{font-size:30px;}
+
+.store-btns img{width:120px;}
+.qr img{width:80px;}
+
+}
+
+</style>
+</head>
+
+<body>
+<!-- STACKLY LOADER -->
+<!-- <div id="stackly-loader">
+  <div class="stackly-spinner"></div>
+  <div class="stackly-text">STACKLY</div>
+</div> -->
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="logo" onclick="window.location.href = 'index.html'" style="cursor: pointer">
+<img src="stacklylogo (3).webp">
+</div>
+<!-- <div>Stackly@bank.com</div> -->
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<ul class="nav-links">
+<li class="dropdown-parent">
+<a href="index.html">Home </a>
+<div class="dropdown-menu">
+<!-- <a href="home.html">Home2</a> -->
+
+</div>
+</li>
+<!-- <li><a href="accounts.html">Accounts</a></li>
+<li><a href="dashboard.html">Dashboard</a></li> -->
+<li><a href="services.html">Services</a></li>
+<!-- <li><a href="cards.html">Cards</a></li> -->
+<li><a href="about.html">About</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="nav-cta">
+<a href="login.html">Login</a>
+</div>
+
+<div class="hamburger" onclick="openMenu()">
+<span></span><span></span><span></span>
+</div>
+
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<div class="close-btn" onclick="closeMenu()">✕</div>
+
+<div class="mobile-item">
+
+  <a href="index.html" class="mobile-link">Home</a>
+
+  <!-- <span class="drop-icon" onclick="toggleDrop(this)">▾</span> -->
+
+</div>
+
+<!-- <div class="mobile-sub">
+  <a href="home.html">Home2</a>
+</div> -->
+
+
+<!-- <a href="accounts.html">Accounts</a>
+<a href="dashboard.html">Dashboard</a> -->
+<a href="services.html">Services</a>
+<!-- <a href="cards.html">Cards</a> -->
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="login.html">Login</a>
+
+<!-- SOCIAL -->
+<div class="mobile-social">
+<h4>Follow Us</h4>
+<div class="social-icons">
+<a href="404.html">f</a>
+<a href="404.html">X</a>
+<a href="404.html">in</a>
+<a href="404.html">▶</a>
+</div>
+
+<div class="app-download">
+<h4>Download App</h4>
+<div class="store-btns">
+<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+</div>
+
+<div class="qr">
+<img src="qrcode.webp">
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+<script>
+function openMenu(){document.getElementById("mobileMenu").classList.add("active");}
+function closeMenu(){document.getElementById("mobileMenu").classList.remove("active");}
+function toggleDrop(el){let next=el.nextElementSibling;next.style.display=next.style.display==="block"?"none":"block";}
+
+
+/* wait until page loads */
+window.addEventListener("DOMContentLoaded", function(){
+
+/* typing title */
+const text="Stackly Banking Services";
+let i=0;
+
+function type(){
+  const el = document.getElementById("typing");
+  if(!el) return;   // safety
+
+  if(i < text.length){
+    el.innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type,45);
+  }
+}
+
+type();
+
+});
+
+/* dropdown toggle */
+function toggleDrop(icon){
+  const submenu = icon.parentElement.nextElementSibling;
+
+  if(submenu.style.display === "block"){
+    submenu.style.display = "none";
+  }else{
+    submenu.style.display = "block";
+  }
+
+  icon.classList.toggle("rotate");
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{background:#f4f6fb}
+
+/* ================= HERO VIDEO ================= */
+.hero{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+padding:0 8%;
+color:white;
+overflow:hidden;
+}
+
+/* video */
+.hero video{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+}
+
+/* overlay */
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(90deg,rgba(0,0,0,.70),rgba(0,0,0,.30));
+z-index:-1;
+}
+
+/* content */
+.content{
+max-width:620px;
+animation:fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.content h1{
+font-size:52px;
+margin-bottom:12px;
+letter-spacing:1px;
+}
+
+.content h2{
+font-size:28px;
+color:#ffdede;
+height:36px;
+margin-bottom:18px;
+}
+
+.content p{
+color:#eee;
+margin-bottom:28px;
+line-height:1.6;
+}
+
+/* buttons */
+.buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.buttons a{
+padding:14px 28px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.primary{
+background:#c40000;
+color:white;
+}
+.primary:hover{background:#8b0000}
+
+.secondary{
+border:2px solid white;
+color:white;
+}
+.secondary:hover{background:white;color:#8b0000}
+
+/* scroll arrow */
+.scroll{
+position:absolute;
+bottom:35px;
+left:50%;
+transform:translateX(-50%);
+font-size:32px;
+color:white;
+cursor:pointer;
+animation:bounce 1.8s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translate(-50%,0)}
+50%{transform:translate(-50%,10px)}
+}
+
+/* dummy home section */
+.home-section{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+color:#8b0000;
+background:white;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.hero{
+text-align:center;
+justify-content:center;
+padding:120px 20px 60px;
+}
+
+.content{
+max-width:100%;
+}
+
+.content h1{font-size:34px}
+.content h2{font-size:20px;height:28px}
+.content p{font-size:14px}
+
+.buttons{
+flex-direction:column;
+align-items:center;
+}
+
+.buttons a{
+width:85%;
+max-width:280px;
+padding:12px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<!-- background video -->
+
+<video autoplay muted loop playsinline>
+<source src="204306-923909642_medium (1) (1).mp4" type="video/mp4">
+</video>
+
+<div class="content">
+<h1>Stackly Banking Services</h1>
+<h2 id="typing"></h2>
+
+<p>
+Secure digital banking with instant transfers, smart savings accounts,
+credit cards and 24/7 AI customer assistance.
+</p>
+
+<div class="buttons">
+<a href="404.html" class="primary">→ Open Account</a>
+<a href="404.html" class="secondary">→ Explore Services</a>
+</div>
+</div>
+
+<!-- scroll arrow -->
+
+<div class="scroll" onclick="scrollDown()">⌄</div>
+
+</section>
+
+
+
+<script>
+
+/* ===== TITLE ANIMATION (Typing) ===== */
+const words=["Digital Payments","Smart Savings","Instant Loans","Secure Credit Cards","24/7 AI Support"];
+let i=0,j=0,typing=document.getElementById("typing");
+
+function type(){
+if(j<words[i].length){
+typing.textContent+=words[i][j++];
+setTimeout(type,70);
+}else setTimeout(erase,1500);
+}
+
+function erase(){
+if(j>0){
+typing.textContent=words[i].substring(0,--j);
+setTimeout(erase,40);
+}else{ i=(i+1)%words.length; setTimeout(type,300); }
+}
+type();
+
+/* ===== SCROLL DOWN ===== */
+function scrollDown(){
+document.getElementById("home").scrollIntoView({behavior:"smooth"});
+}
+
+</script>
+
+
+
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#f2f4f8;
+min-height:200vh;
+}
+
+/* ===== OPEN BUTTON ===== */
+.chat-btn{
+position:fixed;
+right:20px;
+bottom:20px;
+width:65px;
+height:65px;
+border-radius:50%;
+background:linear-gradient(135deg,#b30000,#ff2b2b);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+z-index:9999;
+}
+
+/* ===== CHATBOX ===== */
+.assistant-container{
+position:fixed;
+right:20px;
+bottom:95px;
+width:330px;
+height:470px;
+background:#fff;
+border-radius:16px;
+box-shadow:0 18px 45px rgba(0,0,0,.35);
+display:none;
+flex-direction:column;
+overflow:hidden;
+z-index:9999;
+}
+
+/* header */
+.assistant-header{
+background:linear-gradient(135deg,#b30000,#ff2b2b);
+color:#fff;
+padding:12px;
+display:flex;
+align-items:center;
+gap:10px;
+position:relative;
+}
+
+.assistant-header img{
+width:42px;
+height:42px;
+border-radius:50%;
+border:2px solid #fff;
+}
+
+.assistant-header h3{margin:0;font-size:15px}
+.assistant-header span{font-size:12px}
+
+/* close button */
+.close-btn{
+position:absolute;
+right:12px;
+top:10px;
+font-size:20px;
+cursor:pointer;
+}
+
+/* messages */
+.chat-messages{
+flex:1;
+padding:12px;
+background:#fafafa;
+overflow-y:auto;
+}
+
+.msg{
+padding:10px 14px;
+border-radius:12px;
+margin:8px 0;
+max-width:80%;
+font-size:14px;
+line-height:1.4;
+}
+
+.user{
+background:#d10000;
+color:#fff;
+margin-left:auto;
+}
+
+.bot{
+background:#fff;
+border:1px solid #ddd;
+}
+
+/* input */
+.chat-input{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+.chat-input input{
+flex:1;
+padding:12px;
+border:none;
+outline:none;
+font-size:14px;
+}
+
+.chat-input button{
+background:#d10000;
+color:#fff;
+border:none;
+padding:12px 18px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* mobile */
+@media(max-width:600px){
+.assistant-container{
+right:8px;
+left:8px;
+width:auto;
+height:480px;
+bottom:90px;
+}
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- BUTTON -->
+<div class="chat-btn" onclick="openChat()">🤖</div>
+
+<!-- CHATBOX -->
+<div class="assistant-container" id="chatbox">
+
+<div class="assistant-header">
+<img src="bot.webp">
+<div>
+<h3>Stackly Bank Assistant</h3>
+<span>Online • Replies instantly</span>
+</div>
+<div class="close-btn" onclick="closeChat()">✖</div>
+</div>
+
+<div class="chat-messages" id="messages">
+<div class="msg bot">Hello 👋 I am your banking assistant. Ask me anything about account, loans, cards, login or branch.</div>
+</div>
+
+<div class="chat-input">
+<input type="text" id="userInput" placeholder="Ask your question...">
+<button id="sendBtn">Send</button>
+</div>
+
+</div>
+
+<script>
+
+/* open close */
+function openChat(){
+document.getElementById("chatbox").style.display="flex";
+document.getElementById("userInput").focus();
+}
+function closeChat(){
+document.getElementById("chatbox").style.display="none";
+}
+
+/* ENTER KEY */
+document.getElementById("userInput").addEventListener("keydown",function(e){
+if(e.key==="Enter"){
+sendMessage();
+}
+});
+
+/* BUTTON CLICK */
+document.getElementById("sendBtn").addEventListener("click",sendMessage);
+
+/* SEND MESSAGE */
+function sendMessage(){
+let input=document.getElementById("userInput");
+let text=input.value.trim();
+if(text==="") return;
+
+addMessage(text,"user");
+input.value="";
+botReply(text);
+}
+
+/* ADD MESSAGE */
+function addMessage(text,type){
+let msg=document.createElement("div");
+msg.className="msg "+type;
+msg.innerText=text;
+document.getElementById("messages").appendChild(msg);
+document.getElementById("messages").scrollTop=document.getElementById("messages").scrollHeight;
+}
+
+/* SMART BOT BRAIN */
+function botReply(question){
+
+let q=question.toLowerCase();
+q=q.replace(/[^\w\s]/gi,'');
+
+let answer="Sorry, I didn't understand. Please ask about account, card, loan, branch or login.";
+
+/* ACCOUNT */
+if(q.includes("open")&&q.includes("account")||q.includes("new account")||q.includes("create account"))
+answer="You can open a savings account online using Aadhaar and PAN card. It takes only 5 minutes.";
+
+/* CARD */
+else if(q.includes("credit")||q.includes("card apply")||q.includes("atm card")||q.includes("debit card"))
+answer="You can apply for a debit or credit card online. Approval normally takes 24 to 48 hours.";
+
+/* LOAN */
+else if(q.includes("loan")||q.includes("borrow")||q.includes("finance"))
+answer="We offer personal, home and business loans. Interest starts from 10.5 percent based on eligibility.";
+
+/* LOGIN */
+else if(q.includes("login")||q.includes("password")||q.includes("sign in")||q.includes("cant login"))
+answer="Please click forgot password on login page and reset using OTP sent to your mobile number.";
+
+/* BRANCH */
+else if(q.includes("branch")||q.includes("office")||q.includes("location")||q.includes("near bank"))
+answer="Nearest branch is near City Bus Stand. Working hours 10 AM to 4 PM Monday to Saturday.";
+
+/* IFSC */
+else if(q.includes("ifsc")||q.includes("bank code"))
+answer="Our IFSC code is STKL0001234 used for NEFT and RTGS transfers.";
+
+/* ATM */
+else if(q.includes("atm")||q.includes("withdraw"))
+answer="ATM withdrawal limit is 20,000 rupees per day.";
+
+/* BALANCE */
+else if(q.includes("balance"))
+answer="You can check your account balance using mobile banking app or missed call banking service.";
+
+/* UPI */
+else if(q.includes("upi")||q.includes("transfer")||q.includes("send money"))
+answer="UPI payments are available 24 hours instantly from our mobile banking application.";
+
+/* LOST CARD */
+else if(q.includes("lost")||q.includes("block card")||q.includes("stolen"))
+answer="Please immediately block your card using mobile app or contact customer care.";
+
+/* SUPPORT */
+else if(q.includes("help")||q.includes("support")||q.includes("customer care"))
+answer="You can contact customer support anytime at 1800 000 000.";
+
+/* THINKING EFFECT */
+setTimeout(()=>{
+addMessage(answer,"bot");
+speak(answer);
+},600);
+}
+
+/* VOICE */
+function speak(text){
+let speech=new SpeechSynthesisUtterance(text);
+speech.lang="en-IN";
+window.speechSynthesis.cancel();
+window.speechSynthesis.speak(speech);
+}
+
+</script>
+
+</body>
+</html>
+
+<!-- SCROLL UP BUTTON -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
+<style>
+  /* SCROLL TO TOP BUTTON */
+#scrollTopBtn{
+position:fixed;
+bottom:30px;
+right:25px;
+width:48px;
+height:48px;
+border:none;
+border-radius:50%;
+background:linear-gradient(135deg,#ff2a3d,#7a0000);
+color:#fff;
+font-size:22px;
+cursor:pointer;
+display:none;
+z-index:9999;
+box-shadow:0 8px 20px rgba(217,4,41,.5);
+transition:all .35s ease;
+}
+
+/* hover animation */
+#scrollTopBtn:hover{
+transform:translateY(-6px) scale(1.08);
+box-shadow:0 15px 30px rgba(217,4,41,.8);
+background:black;
+}
+
+/* floating pulse effect */
+#scrollTopBtn::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+background:rgba(255,42,61,.4);
+left:0;
+top:0;
+animation:pulse 1.8s infinite;
+z-index:-1;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);opacity:.7;}
+70%{transform:scale(1.8);opacity:0;}
+100%{opacity:0;}
+}
+</style>
+<style>
+
+/* ===== BODY ===== */
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:#f2f4f8;
+}
+
+/* HEADER */
+.header{
+background:#111;
+color:#fff;
+text-align:center;
+padding:16px 7%;
+font-size:22px;
+font-weight:700;
+letter-spacing:2px;
+}
+
+/* NAV TABS */
+.category-bar{
+display:flex;
+background:#6b6464;
+overflow-x:auto;
+top:0;
+z-index:999;
+}
+
+.category{
+flex:1;
+text-align:center;
+padding:16px;
+color:#fff;
+cursor:pointer;
+border-right:1px solid rgba(255,255,255,.2);
+transition:.35s;
+white-space:nowrap;
+}
+
+.category.active{
+background:#b3131b;
+border-bottom:4px solid #8d0e14;
+}
+
+.category:hover{
+background:#7a7272;
+}
+
+/* PANELS */
+.panel{
+display:none;
+padding:45px 7%;
+}
+
+.panel.active{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:26px;
+animation:fadeSlide .5s ease;
+}
+
+/* animation when tab changes */
+@keyframes fadeSlide{
+0%{opacity:0; transform:translateY(25px);}
+100%{opacity:1; transform:translateY(0);}
+}
+
+/* CARD */
+.card{
+border-radius:18px;
+padding:26px;
+color:#fff;
+min-height:180px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+box-shadow:0 12px 30px rgba(0,0,0,.18);
+transition:.35s;
+position:relative;
+overflow:hidden;
+}
+
+/* shiny animation */
+.card::after{
+content:"";
+position:absolute;
+top:-100%;
+left:-40%;
+width:60%;
+height:250%;
+background:rgba(255,255,255,0.15);
+transform:rotate(25deg);
+transition:.6s;
+}
+
+.card:hover::after{
+top:120%;
+}
+
+/* lift */
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+}
+
+/* COLORS */
+.red{background:linear-gradient(135deg,#b31217,#8b0c11);}
+.blue{background:linear-gradient(135deg,#1486b1,#0c6a8c);}
+.green{background:linear-gradient(135deg,#059669,#047857);}
+.orange{background:linear-gradient(135deg,#d97706,#b45309);}
+.purple{background:linear-gradient(135deg,#7c3aed,#5b21b6);}
+.dark{background:linear-gradient(135deg,#1f2937,#111827);}
+
+/* TEXT */
+.small{font-size:14px;opacity:.9;}
+.big{font-size:19px;font-weight:600;margin:8px 0 15px;line-height:1.3;}
+
+/* BUTTONS */
+.btns{
+display:flex;
+align-items:center;
+gap:16px;
+}
+
+.apply{
+background:#fff;
+color:#b31217;
+padding:9px 18px;
+border-radius:25px;
+text-decoration:none;
+font-weight:600;
+font-size:14px;
+transition:.3s;
+}
+
+.apply:hover{
+background:#000;
+color:#fff;
+}
+
+/* arrow animation */
+.know{
+color:#fff;
+text-decoration:none;
+position:relative;
+}
+
+.know::after{
+content:"→";
+margin-left:6px;
+transition:.25s;
+display:inline-block;
+}
+
+.know:hover::after{
+transform:translateX(6px);
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.panel.active{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:600px){
+.panel.active{
+grid-template-columns:1fr;
+padding:30px 18px;
+}
+.category{font-size:14px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">STACKLY DIGITAL BANK</div>
+
+<!-- TABS -->
+<div class="category-bar">
+<div class="category active" data-target="popular">Popular</div>
+<div class="category" data-target="accounts">Accounts</div>
+<div class="category" data-target="deposits">Deposits</div>
+<div class="category" data-target="cards">Credit Cards</div>
+<div class="category" data-target="loans">Loans</div>
+</div>
+
+<!-- ========= POPULAR ========= -->
+<div class="panel active" id="popular">
+<div class="card red"><div><div class="small">Savings</div><div class="big">Zero balance savings account</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card blue"><div><div class="small">Instant Loan</div><div class="big">Loan up to ₹10 Lakhs</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card green"><div><div class="small">Fixed Deposit</div><div class="big">7.5% yearly returns</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card purple"><div><div class="small">UPI</div><div class="big">Instant money transfer</div></div><div class="btns"><a href="404.html" class="apply">Activate</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card orange"><div><div class="small">Debit Card</div><div class="big">Contactless payments</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card dark"><div><div class="small">Insurance</div><div class="big">Secure your future</div></div><div class="btns"><a href="404.html" class="apply">View</a><a href="404.html" class="know">Know more</a></div></div>
+</div>
+
+<!-- ========= ACCOUNTS ========= -->
+<div class="panel" id="accounts">
+<div class="card red"><div><div class="small">Savings Account</div><div class="big">Open instantly online</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card blue"><div><div class="small">Current Account</div><div class="big">For businesses</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card green"><div><div class="small">Salary Account</div><div class="big">Corporate employees</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card purple"><div><div class="small">NRI Account</div><div class="big">International banking</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card orange"><div><div class="small">Student Account</div><div class="big">Zero minimum balance</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card dark"><div><div class="small">Senior Citizen</div><div class="big">Higher interest rates</div></div><div class="btns"><a href="404.html" class="apply">Open</a><a href="404.html" class="know">Know more</a></div></div>
+</div>
+
+<!-- ========= DEPOSITS ========= -->
+<div class="panel" id="deposits">
+<div class="card green"><div><div class="small">Fixed Deposit</div><div class="big">Safe investment</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card orange"><div><div class="small">Recurring Deposit</div><div class="big">Monthly savings</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card blue"><div><div class="small">Tax Saver FD</div><div class="big">Save tax 80C</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card purple"><div><div class="small">Flexi Deposit</div><div class="big">Flexible withdrawal</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card red"><div><div class="small">Kids Savings</div><div class="big">Future planning</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card dark"><div><div class="small">Goal Deposit</div><div class="big">Save for dream goals</div></div><div class="btns"><a href="404.html" class="apply">Invest</a><a href="404.html" class="know">Know more</a></div></div>
+</div>
+
+<!-- ========= CREDIT CARDS ========= -->
+<div class="panel" id="cards">
+<div class="card red"><div><div class="small">Platinum Card</div><div class="big">5% cashback</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card blue"><div><div class="small">Travel Card</div><div class="big">Airport lounge</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card orange"><div><div class="small">Shopping Card</div><div class="big">Online discounts</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card purple"><div><div class="small">Student Card</div><div class="big">No annual fee</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card green"><div><div class="small">Business Card</div><div class="big">Business payments</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card dark"><div><div class="small">Black Card</div><div class="big">Premium rewards</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+</div>
+
+<!-- ========= LOANS ========= -->
+<div class="panel" id="loans">
+<div class="card blue"><div><div class="small">Personal Loan</div><div class="big">Instant approval</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card red"><div><div class="small">Home Loan</div><div class="big">Low interest EMI</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card green"><div><div class="small">Car Loan</div><div class="big">Fast approval</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card purple"><div><div class="small">Education Loan</div><div class="big">For higher studies</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card orange"><div><div class="small">Gold Loan</div><div class="big">Instant money</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+<div class="card dark"><div><div class="small">Business Loan</div><div class="big">Grow your company</div></div><div class="btns"><a href="404.html" class="apply">Apply</a><a href="404.html" class="know">Know more</a></div></div>
+</div>
+
+<script>
+const categories=document.querySelectorAll(".category");
+const panels=document.querySelectorAll(".panel");
+
+categories.forEach(cat=>{
+cat.onclick=()=>{
+categories.forEach(c=>c.classList.remove("active"));
+panels.forEach(p=>p.classList.remove("active"));
+
+cat.classList.add("active");
+document.getElementById(cat.dataset.target).classList.add("active");
+};
+});
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
+
+</body>
+</html>
+
+
+</body>
+</html>
+
+  <section class="sb-card-hero">
+
+  <div class="sb-card-container">
+
+    <!-- LEFT VISUAL -->
+    <div class="sb-card-left">
+
+        <div class="sb-badge-top">Cashback Up to: 25%</div>
+
+        <div class="sb-card-bg"></div>
+
+        <div class="sb-credit-card">
+            <div class="chip"></div>
+            <h4 class="card-type">Credit Card</h4>
+            <div class="card-number">1234 5678 9000 0000</div>
+            <div class="card-bottom">
+                <span>CARDHOLDER NAME</span>
+                <span>09/23</span>
+            </div>
+        </div>
+
+        <div class="sb-badge-bottom">Average APR: 5.50%</div>
+
+    </div>
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="sb-card-right">
+
+        <span class="sb-small">CREDIT CARD</span>
+
+        <h1>Discover Our<br>Range of Credit Cards</h1>
+
+        <div class="sb-tabs">
+          <a href="404.html"> <button class="active">Rewards Cards</button></a>
+           <a href="404.html"> <button>Cashback Cards</button></a>
+           <a href="404.html"> <button>Travel Cards</button></a>
+        </div>
+
+        <p class="sb-desc"><a href="404.html"></a>
+          Stackly Bank credit cards give you cashback, travel benefits,
+          lounge access and exciting rewards on every purchase.
+        </p>
+
+        <a href="404.html" class="sb-explore">→ Explore Cards</a>
+
+        <div class="sb-form">
+    <input type="text" id="sb-phone" placeholder="Enter Mobile Number">
+    <button type="button" id="sb-submit">Submit</button>
+</div>
+
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const phoneInput = document.getElementById("sb-phone");
+    const submitBtn  = document.getElementById("sb-submit");
+
+    /* ===== Numbers only while typing ===== */
+    phoneInput.addEventListener("input", function(){
+        // remove non-digits
+        this.value = this.value.replace(/\D/g, '');
+
+        // restrict to 10 digits
+        if(this.value.length > 10){
+            this.value = this.value.slice(0,10);
+        }
+    });
+
+    /* ===== Prevent letters pasted ===== */
+    phoneInput.addEventListener("paste", function(e){
+        let pasteData = (e.clipboardData || window.clipboardData).getData("text");
+        if(/\D/.test(pasteData)){
+            e.preventDefault();
+        }
+    });
+
+    /* ===== Submit validation ===== */
+    submitBtn.addEventListener("click", function(){
+
+        let phone = phoneInput.value.trim();
+
+        if(phone.length !== 10){
+            alert("Please enter valid 10 digit mobile number");
+            phoneInput.focus();
+            return;
+        }
+
+        // success redirect
+        window.location.href = "404.html";
+
+    });
+
+});
+
+</script>
+
+<style>
+  /* HERO SECTION */
+.sb-card-hero{
+background:linear-gradient(135deg,#7b0000,#a80000);
+color:#fff;
+padding:90px 20px;
+}
+
+/* CONTAINER */
+.sb-card-container{
+max-width:1250px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:50px;
+flex-wrap:wrap;
+}
+
+/* LEFT SIDE */
+.sb-card-left{
+position:relative;
+flex:1;
+min-width:300px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* BACK PANEL */
+.sb-card-bg{
+width:280px;
+height:420px;
+background:rgba(255,255,255,0.1);
+border-radius:14px;
+position:absolute;
+}
+
+/* CREDIT CARD */
+.sb-credit-card{
+position:relative;
+width:320px;
+height:190px;
+background:#ff1e1e;
+border-radius:14px;
+padding:20px;
+box-shadow:0 20px 40px rgba(0,0,0,.4);
+z-index:2;
+}
+
+.chip{
+width:40px;
+height:30px;
+background:gold;
+border-radius:5px;
+margin-bottom:20px;
+}
+
+.card-type{
+position:absolute;
+top:20px;
+right:20px;
+font-size:14px;
+}
+
+.card-number{
+letter-spacing:3px;
+font-size:20px;
+margin-top:10px;
+}
+
+.card-bottom{
+position:absolute;
+bottom:18px;
+left:20px;
+right:20px;
+display:flex;
+justify-content:space-between;
+font-size:12px;
+}
+
+/* BADGES */
+.sb-badge-top,
+.sb-badge-bottom{
+position:absolute;
+background:#eee;
+color:#000;
+padding:8px 14px;
+border-radius:6px;
+font-size:13px;
+}
+
+.sb-badge-top{
+top:-25px;
+}
+
+.sb-badge-bottom{
+bottom:-30px;
+}
+
+/* RIGHT SIDE */
+.sb-card-right{
+flex:1;
+min-width:320px;
+}
+
+.sb-small{
+letter-spacing:3px;
+font-size:13px;
+opacity:.8;
+}
+
+.sb-card-right h1{
+font-size:42px;
+margin:10px 0 20px;
+}
+
+/* TABS */
+.sb-tabs{
+display:flex;
+gap:12px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.sb-tabs button{
+padding:10px 18px;
+border:none;
+border-radius:8px;
+background:#8d1b1b;
+color:#fff;
+cursor:pointer;
+}
+
+.sb-tabs button.active{
+background:#ff3b3b;
+}
+
+/* DESCRIPTION */
+.sb-desc{
+margin-bottom:20px;
+line-height:1.6;
+opacity:.9;
+}
+
+/* EXPLORE LINK */
+.sb-explore{
+display:inline-block;
+margin-bottom:20px;
+color:#fff;
+text-decoration:none;
+font-weight:600;
+}
+
+/* FORM */
+.sb-form{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.sb-form input{
+padding:12px;
+border:none;
+border-radius:6px;
+width:220px;
+}
+
+.sb-form button{
+padding:12px 18px;
+border:none;
+border-radius:6px;
+background:#fff;
+color:#a80000;
+font-weight:600;
+cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+.sb-card-container{
+flex-direction:column;
+text-align:center;
+}
+
+.sb-card-right h1{
+font-size:28px;
+}
+
+.sb-form{
+justify-content:center;
+}
+
+.sb-credit-card{
+width:280px;
+}
+
+}
+
+</style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:linear-gradient(#eef3ff,#f7f9ff)}
+
+/* TITLE */
+.loan-section{
+max-width:1250px;
+margin:80px auto;
+padding:20px;
+}
+.loan-title{
+text-align:center;
+margin-bottom:45px;
+}
+.loan-title h2{
+font-size:36px;
+color:#1a2b49;
+}
+
+/* GRID */
+.loans{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+}
+
+/* CARD */
+.loan-card{
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.10);
+transition:transform .4s ease, box-shadow .4s ease;
+opacity:0;
+transform:translateY(40px);
+}
+
+/* ANIMATION SHOW */
+.loan-card.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* HOVER EFFECT */
+.loan-card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 45px rgba(26,78,216,.25);
+}
+
+/* IMAGE */
+.loan-img{
+height:180px;
+overflow:hidden;
+}
+.loan-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:transform .6s;
+}
+.loan-card:hover img{transform:scale(1.1)}
+
+/* CONTENT */
+.loan-content{
+padding:22px;
+}
+.loan-content h3{
+color:#1a4ed8;
+margin-bottom:8px;
+}
+.loan-content p{
+font-size:14px;
+color:#555;
+line-height:1.5;
+margin-bottom:18px;
+}
+
+/* BUTTON */
+.loan-btn{
+display:inline-block;
+padding:11px 20px;
+background:#c40000;;
+color:#fff;
+border-radius:8px;
+text-decoration:none;
+font-size:14px;
+transition:.3s;
+}
+.loan-btn:hover{
+background:#123bb5;
+}
+
+/* MOBILE */
+@media(max-width:1000px){
+.loans{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+.loans{grid-template-columns:1fr}
+.loan-title h2{font-size:26px}
+}
+</style>
+</head>
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+
+body{background:#f3f4f6;}
+
+/* TOP TABS */
+.loan-tabs{
+display:flex;
+justify-content:center;
+background:#8b0000;
+flex-wrap:wrap;
+}
+
+.loan-tabs button{
+background:transparent;
+border:none;
+color:white;
+padding:18px 26px;
+font-size:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.loan-tabs button.active{
+border-bottom:4px solid white;
+font-weight:600;
+}
+
+.loan-tabs button:hover{
+background:#a50000;
+}
+
+/* LAYOUT */
+.loan-wrapper{
+display:grid;
+grid-template-columns:420px 1fr;
+min-height:calc(100vh - 60px);
+}
+
+/* LEFT IMAGE */
+.loan-image{
+background:url("cards.webp") center/cover no-repeat;
+}
+
+/* RIGHT CONTENT */
+.loan-content{
+padding:50px 60px;
+}
+
+.loan-small{
+color:#c40000;
+font-weight:600;
+letter-spacing:2px;
+margin-bottom:8px;
+}
+
+.loan-title{
+font-size:42px;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.loan-desc{color:#555;margin-bottom:30px;}
+
+.calculator{
+display:grid;
+grid-template-columns:1fr 320px;
+gap:40px;
+}
+
+/* SLIDERS */
+.range-group{margin-bottom:30px;}
+.range-group label{font-weight:600;}
+.range-group span{float:right;color:#8b0000;font-weight:600;}
+
+input[type=range]{
+width:100%;
+margin-top:10px;
+accent-color:#c40000;
+}
+
+/* RESULT BOX */
+.result-box{
+background:#fff;
+border-radius:12px;
+padding:30px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+text-align:center;
+}
+
+.emi{
+font-size:34px;
+color:#c40000;
+font-weight:700;
+margin:15px 0;
+}
+
+.apply-btn{
+border:2px solid #c40000;
+color:#c40000;
+padding:12px 22px;
+border-radius:8px;
+display:inline-block;
+text-decoration:none;
+margin:15px 0;
+transition:.3s;
+}
+
+.apply-btn:hover{
+background:#c40000;
+color:white;
+}
+
+.summary{
+margin-top:20px;
+text-align:left;
+font-size:14px;
+}
+
+.summary div{margin:8px 0;}
+
+/* MOBILE */
+@media(max-width:900px){
+.loan-wrapper{grid-template-columns:1fr;}
+.loan-image{height:260px;}
+.loan-content{padding:30px 20px;}
+.calculator{grid-template-columns:1fr;}
+.loan-title{font-size:30px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- TABS -->
+<div class="loan-tabs">
+<button class="active" onclick="setLoan('home',this)">Home Loan</button>
+<button onclick="setLoan('vehicle',this)">Vehicle Loan</button>
+<button onclick="setLoan('personal',this)">Personal Loan</button>
+<button onclick="setLoan('education',this)">Education Loan</button>
+<button onclick="setLoan('mortgage',this)">Mortgage Loan</button>
+</div>
+
+<div class="loan-wrapper">
+
+<div class="loan-image"></div>
+
+<div class="loan-content">
+
+<div class="loan-small">LOAN CALCULATOR</div>
+<div class="loan-title" id="loanTitle">Stackly Home Loan Calculator</div>
+<div class="loan-desc">Estimate your monthly EMI quickly & easily with our smart calculator.</div>
+
+<div class="calculator">
+
+<!-- CONTROLS -->
+<div>
+
+<div class="range-group">
+<label>Loan Amount <span id="amountLabel">₹5,00,000</span></label>
+<input type="range" id="amount" min="50000" max="2500000" step="10000" value="500000">
+</div>
+
+<div class="range-group">
+<label>Loan Term (Years) <span id="yearLabel">10 Years</span></label>
+<input type="range" id="years" min="1" max="30" value="10">
+</div>
+
+<div class="range-group">
+<label>Interest Rate <span id="rateLabel">8%</span></label>
+<input type="range" id="rate" min="5" max="18" step="0.1" value="8">
+</div>
+
+</div>
+
+<!-- RESULT -->
+<div class="result-box">
+<div>Monthly EMI</div>
+<div class="emi" id="emi">₹0</div>
+
+<a href="404.html" class="apply-btn">Apply Online</a>
+
+<div class="summary">
+<div><b>Interest Amount:</b> <span id="interest">₹0</span></div>
+<div><b>Total Payment:</b> <span id="total">₹0</span></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+
+/* EMI Formula */
+function calculateEMI(){
+let P=parseFloat(amount.value);
+let annual=parseFloat(rate.value);
+let yearsVal=parseFloat(years.value);
+
+let r=annual/12/100;
+let n=yearsVal*12;
+
+let emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+
+if(!isFinite(emi)) emi=0;
+
+let total=emi*n;
+let interest=total-P;
+
+emiEl.innerHTML="₹"+Math.round(emi).toLocaleString();
+interestEl.innerHTML="₹"+Math.round(interest).toLocaleString();
+totalEl.innerHTML="₹"+Math.round(total).toLocaleString();
+
+amountLabel.innerHTML="₹"+P.toLocaleString();
+yearLabel.innerHTML=yearsVal+" Years";
+rateLabel.innerHTML=annual+"%";
+}
+
+const amount=document.getElementById("amount");
+const years=document.getElementById("years");
+const rate=document.getElementById("rate");
+
+const emiEl=document.getElementById("emi");
+const interestEl=document.getElementById("interest");
+const totalEl=document.getElementById("total");
+
+const amountLabel=document.getElementById("amountLabel");
+const yearLabel=document.getElementById("yearLabel");
+const rateLabel=document.getElementById("rateLabel");
+
+amount.oninput=calculateEMI;
+years.oninput=calculateEMI;
+rate.oninput=calculateEMI;
+
+calculateEMI();
+
+/* TABS CHANGE */
+function setLoan(type,el){
+document.querySelectorAll(".loan-tabs button").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
+
+const title=document.getElementById("loanTitle");
+
+if(type==="home"){
+title.innerHTML="Stackly Home Loan Calculator";
+amount.max=2500000;
+rate.value=8;
+}
+if(type==="vehicle"){
+title.innerHTML="Stackly Vehicle Loan Calculator";
+amount.max=1000000;
+rate.value=10;
+}
+if(type==="personal"){
+title.innerHTML="Stackly Personal Loan Calculator";
+amount.max=500000;
+rate.value=13;
+}
+if(type==="education"){
+title.innerHTML="Stackly Education Loan Calculator";
+amount.max=1500000;
+rate.value=9;
+}
+if(type==="mortgage"){
+title.innerHTML="Stackly Mortgage Loan Calculator";
+amount.max=3000000;
+rate.value=7.5;
+}
+
+calculateEMI();
+}
+</script>
+
+</body>
+</html>
+
+<body>
+
+<section class="loan-section">
+
+<div class="loan-title">
+<h2>Stackly Bank Loan Products</h2>
+</div>
+
+<div class="loans">
+
+<!-- CARD TEMPLATE (10 cards) -->
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="personal.webp"></div>
+<div class="loan-content">
+<h3>Personal Loan</h3>
+<p>Quick approval loans with minimal documentation and flexible EMI options.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="corporateloan.webp"></div>
+<div class="loan-content">
+<h3>Corporate Loan</h3>
+<p>Financial solutions to support corporate expansion and operational needs.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="homeloan.webp"></div>
+<div class="loan-content">
+<h3>Home Loan</h3>
+<p>Low interest housing finance with long tenure repayment options needs.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="car-loan.webp"></div>
+<div class="loan-content">
+<h3>Car Loan</h3>
+<p>Drive your dream car with quick approval and competitive EMI plans.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="bikeloan.webp"></div>
+<div class="loan-content">
+<h3>Bike Loan</h3>
+<p>Instant financing for two-wheelers with minimal paperwork.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="educationlaon123.webp"></div>
+<div class="loan-content">
+<h3>Education Loan</h3>
+<p>Support your studies in India and abroad with easy repayment options.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="gold.webp"></div>
+<div class="loan-content">
+<h3>Gold Loan</h3>
+<p>Instant cash against gold ornaments with secure locker protection.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="businessloan.webp"></div>
+<div class="loan-content">
+<h3>Business Loan</h3>
+<p>Expand your business operations with flexible financing solutions.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="propertyloan.webp"></div>
+<div class="loan-content">
+<h3>Loan Against Property</h3>
+<p>Unlock funds by mortgaging residential or commercial property.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+<div class="loan-card">
+<div class="loan-img"><img loading="lazy" src="Agriculture-Loan (1).webp"></div>
+<div class="loan-content">
+<h3>Agriculture Loan</h3>
+<p>Financial support for farming, equipment purchase and crop growth.</p>
+<a href="404.html" class="loan-btn">Know More</a>
+</div>
+</div>
+
+</div>
+</section>
+
+<script>
+/* SCROLL REVEAL ANIMATION */
+const cards=document.querySelectorAll(".loan-card");
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:0.15});
+
+cards.forEach(card=>observer.observe(card));
+</script>
+
+</body>
+
+</html>
+<section class="sb-award-gallery">
+
+  <h2 class="sb-ag-title">Our Awards & Certificates</h2>
+
+  <div class="sb-ag-slider">
+
+    <div class="sb-ag-track">
+
+      <!-- CARD 1 -->
+      <div class="sb-ag-card">
+        <img src="award.webp">
+        <h3>Best Digital Bank</h3>
+        <p>Recognized for excellence in online banking services.</p>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="sb-ag-card">
+        <img src="awrd2.webp">
+        <h3>Customer Service Award</h3>
+        <p>Outstanding support & customer satisfaction.</p>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="sb-ag-card">
+        <img src="award2.webp">
+        <h3>Innovation in Banking</h3>
+        <p>Advanced digital payment technologies.</p>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="sb-ag-card">
+        <img src="award1.webp">
+        <h3>FinTech Leadership</h3>
+        <p>Top performing fintech institution.</p>
+      </div>
+
+      <!-- DUPLICATE FOR SMOOTH LOOP -->
+      <div class="sb-ag-card">
+        <img src="award2.webp">
+        <h3>Best Digital Bank</h3>
+        <p>Recognized for excellence in online banking services.</p>
+      </div>
+
+      <div class="sb-ag-card">
+        <img src="award5.webp">
+        <h3>Customer Service Award</h3>
+        <p>Outstanding support & customer satisfaction.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<style>
+  /* SECTION */
+.sb-award-gallery{
+padding:80px 20px;
+background:linear-gradient(135deg,#eef3ff,#f8fbff);
+text-align:center;
+overflow:hidden;
+}
+
+.sb-ag-title{
+font-size:34px;
+margin-bottom:40px;
+color:#1a2b49;
+}
+
+/* SLIDER WINDOW */
+.sb-ag-slider{
+overflow:hidden;
+position:relative;
+}
+
+/* TRACK (MOVING PART) */
+.sb-ag-track{
+display:flex;
+gap:30px;
+width:max-content;
+animation:sbSlide 25s linear infinite;
+}
+
+/* PAUSE ON HOVER */
+.sb-ag-slider:hover .sb-ag-track{
+animation-play-state:paused;
+}
+
+/* CARD */
+.sb-ag-card{
+background:#fff;
+width:260px;
+padding:18px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+flex-shrink:0;
+transition:.3s;
+}
+
+.sb-ag-card:hover{
+transform:translateY(-8px);
+}
+
+/* IMAGE */
+.sb-ag-card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:12px;
+}
+
+/* TEXT */
+.sb-ag-card h3{
+font-size:18px;
+margin-bottom:6px;
+color:#1a4ed8;
+}
+
+.sb-ag-card p{
+font-size:14px;
+color:#555;
+}
+
+/* ANIMATION */
+@keyframes sbSlide{
+0%{transform:translateX(0)}
+100%{transform:translateX(-50%)}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.sb-ag-title{font-size:26px}
+
+.sb-ag-card{
+width:220px;
+}
+
+.sb-ag-card img{
+height:140px;
+}
+
+}
+
+</style>
+
+<!-- STACKLY ADVERTISEMENT -->
+<section class="ad-section">
+
+<div class="ad-wrapper">
+
+    <!-- SLIDE 1 -->
+    <div class="ad-slide active">
+        <div class="ad-text">
+            <h2>Zero Balance Savings Account</h2>
+            <p>Open your Stackly Bank account instantly and enjoy free ATM, UPI & Net Banking.</p>
+            <a href="404.html" class="ad-btn">Open Account</a>
+        </div>
+        <div class="ad-img">
+            <img src="cards3.webp">
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="ad-slide">
+        <div class="ad-text">
+            <h2>Lifetime Free Credit Card</h2>
+            <p>Earn cashback and reward points on every transaction with Stackly Credit Card.</p>
+            <a href="404.html" class="ad-btn">Apply Now</a>
+        </div>
+        <div class="ad-img">
+            <img src="cards4.webp">
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="ad-slide">
+        <div class="ad-text">
+            <h2>Instant Personal Loan</h2>
+            <p>Get loan approval in 5 minutes with minimum documents.</p>
+            <a href="404.html" class="ad-btn">Check Eligibility</a>
+        </div>
+        <div class="ad-img">
+            <img src="cards.webp">
+        </div>
+    </div>
+
+</div>
+</section>
+
+<style>
+
+/* SECTION */
+.ad-section{
+max-width:1100px;
+margin:70px auto;
+padding:20px;
+}
+
+/* WRAPPER */
+.ad-wrapper{
+position:relative;
+overflow:hidden;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+/* SLIDE */
+.ad-slide{
+display:none;
+align-items:center;
+justify-content:space-between;
+background:linear-gradient(135deg,#1a4ed8,#4f7cff);
+color:#fff;
+padding:40px;
+gap:30px;
+min-height:320px;
+}
+
+/* ACTIVE */
+.ad-slide.active{
+display:flex;
+}
+
+/* TEXT */
+.ad-text{
+flex:1;
+}
+.ad-text h2{
+font-size:32px;
+margin-bottom:12px;
+}
+.ad-text p{
+margin-bottom:20px;
+line-height:1.5;
+}
+
+/* BUTTON */
+.ad-btn{
+display:inline-block;
+background:#fff;
+color:#1a4ed8;
+padding:12px 22px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+/* IMAGE */
+.ad-img{
+flex:1;
+text-align:center;
+}
+.ad-img img{
+max-width:380px;
+width:100%;
+}
+
+/* MOBILE FIX */
+@media(max-width:900px){
+
+.ad-slide{
+flex-direction:column;
+text-align:center;
+padding:25px;
+min-height:auto;
+}
+
+.ad-text h2{font-size:24px}
+
+.ad-img img{
+max-width:260px;
+}
+
+}
+
+</style>
+
+<script>
+const adSlides=document.querySelectorAll(".ad-slide");
+let adIndex=0;
+
+setInterval(()=>{
+    adSlides[adIndex].classList.remove("active");
+    adIndex=(adIndex+1)%adSlides.length;
+    adSlides[adIndex].classList.add("active");
+},4000);
+</script>
+<section class="campaign-hero">
+
+  <div class="campaign-container">
+
+      <!-- LEFT SIDE -->
+      <div class="campaign-left">
+
+          <div class="campaign-badge">
+              <span>STACKLY BANK</span>
+              <strong>FRAUD PATROL</strong>
+          </div>
+
+          <h1>Let’s Make India<br>Fraud Free</h1>
+
+          <p class="campaign-sub">
+              Stay Safe, Stay Alert and protect your banking information.
+          </p>
+
+          <div class="campaign-buttons">
+              <a href="404.html" class="btn-blue">Know More</a>
+              <a href="404.html" class="btn-dark">Chat Now</a>
+          </div>
+
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="campaign-right">
+          <img src="digital-banking.webp">
+      </div>
+
+  </div>
+
+</section>
+<style>
+/* FULL WIDTH HERO */
+.campaign-hero{
+width:100%;
+background:#6ec6c6;
+padding:70px 0 0;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+}
+
+/* CONTAINER */
+.campaign-container{
+max-width:1250px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:30px;
+padding:0 40px;
+}
+
+/* LEFT CONTENT */
+.campaign-left{
+max-width:520px;
+z-index:2;
+}
+
+.campaign-badge{
+background:#0f4c81;
+color:#fff;
+display:inline-block;
+padding:10px 18px;
+border-radius:30px;
+margin-bottom:20px;
+font-size:14px;
+}
+.campaign-badge strong{
+display:block;
+font-size:18px;
+letter-spacing:1px;
+}
+
+.campaign-left h1{
+font-size:48px;
+line-height:1.2;
+color:#083344;
+margin-bottom:15px;
+}
+
+.campaign-sub{
+font-size:18px;
+color:#083344;
+margin-bottom:25px;
+}
+
+/* BUTTONS */
+.campaign-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn-blue{
+background:#0b5ed7;
+color:#fff;
+padding:14px 26px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+.btn-dark{
+background:#134074;
+color:#fff;
+padding:14px 26px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+/* RIGHT IMAGE */
+.campaign-right{
+position:relative;
+flex:1;
+display:flex;
+align-items:flex-end;
+justify-content:flex-end;
+}
+
+.campaign-right img{
+max-height:480px;
+object-fit:contain;
+margin-bottom:-5px;   /* image touches bottom like poster */
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.campaign-container{
+flex-direction:column;
+text-align:center;
+padding:0 20px;
+}
+
+.campaign-left h1{
+font-size:30px;
+}
+
+.campaign-sub{
+font-size:15px;
+}
+
+.campaign-buttons{
+justify-content:center;
+}
+
+.campaign-right img{
+max-height:320px;
+margin-top:20px;
+}
+
+}
+</style>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+
+<h2 class="section-title">What Our Customers Say</h2>
+
+<div class="testimonial-container" id="testimonialSlider">
+
+  <div class="testimonial-card">
+    <p>"Stackly Bank loan process was super fast. I got approval within 24 hours!"</p>
+    <h4>Rahul Sharma</h4>
+    <span>Bangalore</span>
+  </div>
+
+  <div class="testimonial-card">
+    <p>"EMI calculator helped me plan my finances perfectly. Very easy to use."</p>
+    <h4>Anjali Verma</h4>
+    <span>Mumbai</span>
+  </div>
+
+  <div class="testimonial-card">
+    <p>"Customer support is amazing and interest rates are very competitive."</p>
+    <h4>Arjun Patel</h4>
+    <span>Ahmedabad</span>
+  </div>
+
+  <div class="testimonial-card">
+    <p>"Best banking experience I have ever had. Highly recommended!"</p>
+    <h4>Sneha Reddy</h4>
+    <span>Hyderabad</span>
+  </div>
+
+</div>
+</section>
+<style>
+  /* TESTIMONIALS */
+.testimonial-section{
+background:#fff;
+padding:80px 20px;
+text-align:center;
+}
+
+.section-title{
+font-size:32px;
+margin-bottom:50px;
+color:#8b0000;
+}
+
+.testimonial-container{
+display:flex;
+gap:30px;
+overflow:hidden;
+scroll-behavior:smooth;
+}
+
+.testimonial-card{
+min-width:300px;
+background:linear-gradient(135deg,#c40000,#ff2b2b);
+color:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+transition:.4s;
+}
+
+.testimonial-card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.testimonial-card p{
+font-size:15px;
+margin-bottom:18px;
+line-height:1.6;
+}
+
+.testimonial-card h4{
+margin:0;
+font-size:18px;
+}
+
+.testimonial-card span{
+font-size:13px;
+opacity:.85;
+}
+
+</style>
+<script>
+let slider = document.getElementById("testimonialSlider");
+
+setInterval(()=>{
+slider.scrollLeft += 330;
+
+if(slider.scrollLeft >= slider.scrollWidth - slider.clientWidth){
+slider.scrollLeft = 0;
+}
+},2500);
+</script>
+<!-- FAQ -->
+<section class="faq-section">
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="faq-container">
+
+  <div class="faq-item">
+    <button class="faq-question">What is EMI?</button>
+    <div class="faq-answer">
+      EMI (Equated Monthly Installment) is the fixed amount you pay every month to repay your loan.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">How is EMI calculated?</button>
+    <div class="faq-answer">
+      EMI is calculated using loan amount, interest rate and loan tenure using standard banking formula.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">Can I repay loan early?</button>
+    <div class="faq-answer">
+      Yes, Stackly Bank allows prepayment and foreclosure with minimal charges.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">What documents are required?</button>
+    <div class="faq-answer">
+      Aadhaar card, PAN card, income proof and bank statements are required.
+    </div>
+  </div>
+
+</div>
+</section>
+<style>
+  /* FAQ */
+.faq-section{
+background:#f4f6f9;
+padding:80px 20px;
+.faq-title{
+text-align:center;
+width:100%;
+display:block;
+margin:0 auto 40px auto;
+font-size:32px;
+font-weight:700;
+color:#8b0000;
+}
+}
+
+.faq-container{
+max-width:800px;
+margin:auto;
+}
+/* FAQ HEADLINE CENTER */
+.faq-title{
+text-align:center;
+width:100%;
+display:block;
+margin:0 auto 40px auto;
+font-size:32px;
+font-weight:700;
+color:#8b0000;
+}
+
+.faq-item{
+background:white;
+margin-bottom:15px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+overflow:hidden;
+}
+
+.faq-question{
+width:100%;
+padding:18px 20px;
+text-align:left;
+font-size:16px;
+font-weight:600;
+border:none;
+background:#ffffff;
+cursor:pointer;
+position:relative;
+}
+
+.faq-question::after{
+content:"+";
+position:absolute;
+right:20px;
+font-size:22px;
+color:#c40000;
+}
+
+.faq-item.active .faq-question::after{
+content:"−";
+}
+
+.faq-answer{
+max-height:0;
+overflow:hidden;
+padding:0 20px;
+transition:max-height .4s ease, padding .3s ease;
+font-size:15px;
+line-height:1.6;
+color:#444;
+}
+
+.faq-item.active .faq-answer{
+max-height:200px;
+padding:15px 20px 20px;
+}
+
+
+</style>
+<script>
+document.querySelectorAll(".faq-question").forEach(button=>{
+button.addEventListener("click",()=>{
+const item = button.parentElement;
+item.classList.toggle("active");
+});
+});
+</script>
+<footer id="stackly-footer">
+
+  <div class="stackly-footer-container">
+
+    <!-- LOGO + ABOUT -->
+    <div class="stackly-footer-col">
+      <div class="stackly-footer-logo">
+        <!-- CHANGE LOGO PATH -->
+       <a href="index.html"><img src="stacklylogo (3).webp" alt="Stackly Logo"></a> 
+      </div>
+
+      <p>
+        Delivering innovative digital solutions that empower
+        businesses to grow, scale, and succeed.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="stackly-footer-social">
+
+        <!-- FACEBOOK -->
+        <a href="404.html" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+
+        <!-- TWITTER -->
+        <a href="404.html" aria-label="Twitter">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.6 8.6 0 0 1-2.72 1.04A4.28 4.28 0 0 0 11.1 8.1a12.15 12.15 0 0 1-8.82-4.47 4.28 4.28 0 0 0 1.32 5.72A4.2 4.2 0 0 1 2 8.8v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 18.57 12.13 12.13 0 0 0 8.29 20.5c7.55 0 11.68-6.26 11.68-11.68v-.53A8.3 8.3 0 0 0 22.46 6z"/>
+          </svg>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="404.html" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 8.98h4v12H3zM9 8.98h3.8v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.05 0 4.8 2.66 4.8 6.12v6.34h-4v-5.62c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.72H9z"/>
+          </svg>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="404.html" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm4.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="stackly-footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+<li><a href="index.html">Home</a></li>
+<!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+<li><a href="services.html">Services</a></li>
+<!-- <li><a href="cards.html">Cards</a></li> -->
+<li><a href="about.html">About</a></li>
+<li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="stackly-footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="404.html">Banking </a></li>
+        <li><a href="404.html">Mobile Banking</a></li>
+        <li><a href="404.html">Payment Solutions</a></li>
+        <li><a href="404.html">AI & Automation</a></li>
+        <!-- <li><a href="404.html">Security</a></li> -->
+      </ul>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <!-- <div class="stackly-footer-col">
+  <h3>Subscribe</h3>
+  <p>Get updates and insights delivered to your inbox.</p>
+
+  <form class="stackly-footer-subscribe" id="subscribeForm">
+    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div> -->
+
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="stackly-footer-contactbar">
+    Contact us: <a href="mailto:info@stackly.com">info@stackly.com</a>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="stackly-footer-bottom">
+    <span>© 2026 Stackly. All Rights Reserved.</span>
+    <div class="stackly-footer-legal">
+      <a href="404.html">Privacy Policy</a>
+      <a href="404.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+</footer>
+<style>
+ 
+/* ===== FOOTER ===== */
+#stackly-footer{
+  background:#c40000;
+  color:#e5e7eb;
+  padding-top:80px;
+  font-family:'Poppins',sans-serif;
+  margin-top: 30px;
+}
+
+/* CONTAINER */
+.stackly-footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 80px 60px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+/* LOGO IMAGE */
+.stackly-footer-logo img{
+  width:160px;
+  height:auto;
+  display:block;
+  margin-bottom:16px;
+  filter:brightness(0) invert(1); /* REMOVE if logo already white */
+}
+
+/* TEXT */
+.stackly-footer-col p{
+  font-size:15px;
+  line-height:1.7;
+  color:white;
+  margin-bottom:16px;
+}
+
+/* HEADINGS */
+.stackly-footer-col h3{
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+/* LINKS */
+.stackly-footer-col ul{
+  list-style:none;
+  padding:0;
+}
+
+.stackly-footer-col ul li{
+  margin-bottom:12px;
+}
+
+.stackly-footer-col ul li a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.stackly-footer-col ul li a:hover{
+  color:#ffffff;
+  padding-left:6px;
+}
+
+/* SOCIAL ICONS */
+.stackly-footer-social{
+  display:flex;
+  gap:14px;
+  margin-top:20px;
+}
+
+.stackly-footer-social a{
+  width:40px;
+  height:40px;
+  background:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.stackly-footer-social svg{
+  width:18px;
+  height:18px;
+  fill:blue;
+}
+
+.stackly-footer-social a:hover{
+  background:white;
+  transform:translateY(-4px);
+}
+
+.stackly-footer-social a:hover svg{
+  fill:#0284c7;
+}
+
+/* SUBSCRIBE */
+.stackly-footer-subscribe{
+  display:flex;
+  gap:10px;
+}
+
+.stackly-footer-subscribe input{
+  flex:1;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+
+.stackly-footer-subscribe button{
+  padding:12px 18px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  color:#0f172a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* CONTACT BAR */
+.stackly-footer-contactbar{
+  text-align:center;
+  padding:16px;
+  background:rgba(0,0,0,.25);
+}
+
+.stackly-footer-contactbar a{
+  color:white;
+  margin-left:6px;
+  text-decoration:none;
+}
+
+/* BOTTOM */
+.stackly-footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 80px;
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+}
+
+.stackly-footer-legal{
+  display:flex;
+  gap:20px;
+}
+
+.stackly-footer-legal a{
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+.stackly-footer-legal a:hover{
+  color:#ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stackly-footer-container{
+    grid-template-columns:1fr;
+    padding:0 32px 50px;
+  }
+
+  .stackly-footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    padding:16px 32px;
+  }
+
+  .stackly-footer-logo img{
+    width:140px;
+  }
+}
+
+  /* FULL STRIP */
+.sb-app-strip{
+width:100%;
+background:#f2f2f4;
+padding:90px 20px;
+}
+
+/* CONTAINER */
+.sb-app-container{
+max-width:1250px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:40px;
+flex-wrap:wrap;
+}
+
+/* TEXT */
+.sb-app-text h1{
+font-size:90px;
+line-height:1.05;
+font-weight:500;
+color:#e56a2e;
+}
+
+/* QR */
+.sb-app-qr{
+background:#fff;
+padding:14px;
+border-radius:6px;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.sb-app-qr img{
+width:220px;
+height:220px;
+display:block;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+.sb-app-container{
+flex-direction:column;
+text-align:center;
+}
+
+.sb-app-text h1{
+font-size:42px;
+}
+
+.sb-app-qr img{
+width:180px;
+height:180px;
+}
+
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* WRAPPER */
+#stkly-support-strip{
+  font-family:Poppins, sans-serif;
+  background:#f1f1f1;
+  padding:28px 15px;
+}
+
+/* GRID */
+.stkly-support-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* ITEM */
+.stkly-support-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:white;
+  padding:18px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#0b1c3d;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+/* HOVER */
+.stkly-support-box:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+/* ICON CIRCLE */
+.stkly-icon{
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#e63946,#b3001b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.stkly-text h4{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.stkly-text p{
+  font-size:13px;
+  color:#666;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .stkly-support-container{
+    grid-template-columns:1fr;
+  }
+
+  .stkly-support-box{
+    padding:16px;
+  }
+
+  .stkly-icon{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
+
+  .stkly-text h4{
+    font-size:16px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  <!-- FEEDBACK -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-note-sticky"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Add a note of appreciation</h4>
+      <p>Share your experience with our banking services</p>
+    </div>
+  </a>
+
+  <!-- SUPPORT -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-solid fa-phone"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Customer Support</h4>
+      <p>Talk with our 24/7 banking help desk</p>
+    </div>
+  </a>
+
+  <!-- BRANCH -->
+  <a href="404.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-map"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Locate nearest branch</h4>
+      <p>Find ATM & bank branches near you</p>
+    </div>
+  </a>
+
+</div>
+
+</section>
+
+</body>
+</html>
+
+<style>
+/* ===== FOOTER ===== */
+#stackly-footer{
+  background:#c40000;
+  color:#e5e7eb;
+  padding-top:80px;
+  font-family:'Poppins',sans-serif;
+  margin-top: 30px;
+}
+
+/* CONTAINER */
+.stackly-footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 80px 60px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+/* LOGO IMAGE */
+.stackly-footer-logo img{
+  width:160px;
+  height:auto;
+  display:block;
+  margin-bottom:16px;
+  filter:brightness(0) invert(1); /* REMOVE if logo already white */
+}
+
+/* TEXT */
+.stackly-footer-col p{
+  font-size:15px;
+  line-height:1.7;
+  color:white;
+  margin-bottom:16px;
+}
+
+/* HEADINGS */
+.stackly-footer-col h3{
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+/* LINKS */
+.stackly-footer-col ul{
+  list-style:none;
+  padding:0;
+}
+
+.stackly-footer-col ul li{
+  margin-bottom:12px;
+}
+
+.stackly-footer-col ul li a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.stackly-footer-col ul li a:hover{
+  color:#ffffff;
+  padding-left:6px;
+}
+
+/* SOCIAL ICONS */
+.stackly-footer-social{
+  display:flex;
+  gap:14px;
+  margin-top:20px;
+}
+
+.stackly-footer-social a{
+  width:40px;
+  height:40px;
+  background:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.stackly-footer-social svg{
+  width:18px;
+  height:18px;
+  fill:blue;
+}
+
+.stackly-footer-social a:hover{
+  background:white;
+  transform:translateY(-4px);
+}
+
+.stackly-footer-social a:hover svg{
+  fill:#0284c7;
+}
+
+/* SUBSCRIBE */
+.stackly-footer-subscribe{
+  display:flex;
+  gap:10px;
+}
+
+.stackly-footer-subscribe input{
+  flex:1;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+
+.stackly-footer-subscribe button{
+  padding:12px 18px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  color:#0f172a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* CONTACT BAR */
+.stackly-footer-contactbar{
+  text-align:center;
+  padding:16px;
+  background:rgba(0,0,0,.25);
+}
+
+.stackly-footer-contactbar a{
+  color:white;
+  margin-left:6px;
+  text-decoration:none;
+}
+
+/* BOTTOM */
+.stackly-footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 80px;
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+}
+
+.stackly-footer-legal{
+  display:flex;
+  gap:20px;
+}
+
+.stackly-footer-legal a{
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+.stackly-footer-legal a:hover{
+  color:#ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stackly-footer-container{
+    grid-template-columns:1fr;
+    padding:0 32px 50px;
+  }
+
+  .stackly-footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    padding:16px 32px;
+  }
+
+  .stackly-footer-logo img{
+    width:140px;
+  }
+}
+</style>
+</head>
+
+<body>
+<footer id="stackly-footer">
+
+  <div class="stackly-footer-container">
+
+    <!-- LOGO + ABOUT -->
+    <div class="stackly-footer-col">
+      <div class="stackly-footer-logo">
+        <!-- CHANGE LOGO PATH -->
+       <a href="index.html"><img src="stacklylogo (3).webp" alt="Stackly Logo"></a> 
+      </div>
+
+      <p>
+        Delivering innovative digital solutions that empower
+        businesses to grow, scale, and succeed.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="stackly-footer-social">
+
+        <!-- FACEBOOK -->
+        <a href="404.html" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+
+        <!-- TWITTER -->
+        <a href="404.html" aria-label="Twitter">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.6 8.6 0 0 1-2.72 1.04A4.28 4.28 0 0 0 11.1 8.1a12.15 12.15 0 0 1-8.82-4.47 4.28 4.28 0 0 0 1.32 5.72A4.2 4.2 0 0 1 2 8.8v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 18.57 12.13 12.13 0 0 0 8.29 20.5c7.55 0 11.68-6.26 11.68-11.68v-.53A8.3 8.3 0 0 0 22.46 6z"/>
+          </svg>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="404.html" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 8.98h4v12H3zM9 8.98h3.8v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.05 0 4.8 2.66 4.8 6.12v6.34h-4v-5.62c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.72H9z"/>
+          </svg>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="404.html" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm4.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="stackly-footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+<li><a href="index.html">Home</a></li>
+<!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+<li><a href="services.html">Services</a></li>
+<!-- <li><a href="cards.html">Cards</a></li> -->
+<li><a href="about.html">About</a></li>
+<li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="stackly-footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="404.html">Banking </a></li>
+        <li><a href="404.html">Mobile Banking</a></li>
+        <li><a href="404.html">Payment Solutions</a></li>
+        <li><a href="404.html">AI & Automation</a></li>
+        <!-- <li><a href="404.html">Security</a></li> -->
+      </ul>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="stackly-footer-col">
+  <h3>Subscribe</h3>
+  <p>Get updates and insights delivered to your inbox.</p>
+
+  <form class="stackly-footer-subscribe" id="subscribeForm">
+    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="stackly-footer-contactbar">
+    Contact us: <a href="mailto:info@stackly.com">info@stackly.com</a>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="stackly-footer-bottom">
+    <span>© 2026 Stackly. All Rights Reserved.</span>
+    <div class="stackly-footer-legal">
+      <a href="404.html">Privacy Policy</a>
+      <a href="404.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+</footer>
+
+<script>
+
+document.getElementById("subscribeForm").addEventListener("submit", function(e){
+
+    // stop normal form submit (page refresh)
+    e.preventDefault();
+
+    var email = document.getElementById("subscribeEmail").value.trim();
+
+    // email validation
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email === ""){
+        alert("Please enter email address");
+        return;
+    }
+
+    if(emailPattern.test(email)){
+        // redirect to 404 page
+        window.location.href = "404.html";
+    }
+    else{
+        alert("Enter valid email address");
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+
+<script>
+  /* PAGE LOADER FIX */
+document.addEventListener("DOMContentLoaded", function(){
+
+    const loader = document.getElementById("stackly-loader");
+
+    /* wait until full page + images loaded */
+    window.addEventListener("load", function(){
+
+        setTimeout(function(){
+
+            loader.classList.add("hide");
+            document.body.classList.remove("loading");
+
+            /* fully remove loader */
+            setTimeout(function(){
+                loader.remove();
+            },600);
+
+        },1200);
+
+    });
+
+});
+
+
+
+</script>

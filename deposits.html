@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly Digital Banking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#fff;color:#111;overflow-x:hidden;}
+
+/* ================= TOP BAR ================= */
+/* TOP WHITE BAR */
+.top-bar{
+position:sticky;
+top:0;
+z-index:1100; /* above navbar */
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+height:60px;
+padding:0 30px;
+
+background:#fff;
+border-bottom:1px solid #eee;
+}
+
+/* RED NAVBAR */
+.navbar{
+position:sticky;
+top:60px;              /* ⭐ IMPORTANT (height of top-bar) */
+z-index:1000;
+
+background:#d90429;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 30px;
+}
+
+/* ONLY LOGO SIZE CHANGES */
+.logo img{
+height:auto;
+width:150px;
+display:block;
+}
+
+/* ================= NAVBAR ================= */
+
+
+/* circle nav */
+.nav-links{display:flex;gap:18px;align-items:center;}
+.nav-links li{list-style:none;position:relative;}
+
+.nav-links a{
+color:#fff;
+text-decoration:none;
+padding:9px 17px;
+border-radius:50px;
+transition:.25s;
+font-size:14px;
+}
+
+.nav-links a:hover{background:#fff;color:#d90429;}
+
+/* dropdown */
+.dropdown-menu{
+position:absolute;
+top:40px;
+left:0;
+background:#fff;
+min-width:200px;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
+}
+
+.dropdown-parent:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.dropdown-menu a{display:block;padding:12px;color:#333;}
+.dropdown-menu a:hover{background:#f2f2f2;color:#d90429;}
+
+.nav-cta a{
+background:#111;
+color:#fff;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+}
+.mobile-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+border-bottom:1px solid #eee;
+}
+
+.mobile-link{
+text-decoration:none;
+color:#222;
+font-weight:600;
+}
+
+.drop-icon{
+cursor:pointer;
+font-size:18px;
+padding:6px 10px;
+transition:.3s;
+}
+
+.drop-icon.rotate{
+transform:rotate(180deg);
+}
+
+.mobile-sub{
+display:none;
+background:#f7f7f7;
+padding-left:20px;
+}
+
+.mobile-sub a{
+display:block;
+padding:10px 0;
+text-decoration:none;
+color:#555;
+}
+
+/* ================= HAMBURGER ================= */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:26px;height:3px;background:#fff;}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu{
+position:fixed;
+inset:0;
+background:#1b1b1b;
+transform:translateX(-100%);
+transition:.4s;
+z-index:2000;
+overflow-y:auto;
+padding-bottom:40px;
+}
+.mobile-menu.active{transform:translateX(0);}
+
+.mobile-menu a,.mobile-item{
+display:block;
+padding:18px 28px;
+color:#fff;
+font-size:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-decoration:none;
+}
+
+.mobile-sub{display:none;background:#222;}
+.mobile-sub a{font-size:17px;padding-left:45px;color:#ccc;}
+
+.close-btn{position:absolute;top:18px;right:25px;font-size:30px;color:#fff;cursor:pointer;}
+
+/* SOCIAL */
+.mobile-social{
+padding:25px;
+text-align:center;
+}
+.mobile-social h4{color:#fff;margin-bottom:12px;}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:14px;
+margin-bottom:20px;
+}
+.social-icons a{
+width:36px;height:36px;
+background:#fff;
+color:#d90429;
+display:flex;align-items:center;justify-content:center;
+border-radius:50%;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* APP DOWNLOAD */
+.app-download{text-align:center;color:#fff;}
+.store-btns img{width:140px;margin:6px 0;}
+
+/* QR */
+.qr img{width:90px;margin-top:10px;border-radius:6px;}
+
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.nav-links,.nav-cta{display:none;}
+.hamburger{display:flex;}
+
+.hero{height:65vh;}
+
+.hero-content{
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+padding:0 20px;
+}
+
+.hero-content h1{font-size:30px;}
+
+.store-btns img{width:120px;}
+.qr img{width:80px;}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="logo">
+<img src="stacklylogo (3).webp">
+</div>
+<div>stackly@bank.com</div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<ul class="nav-links">
+<li class="dropdown-parent">
+<a href="home.html">Home ▾</a>
+<div class="dropdown-menu">
+<a href="index.html">Home1</a>
+
+</div>
+</li>
+<li><a href="carrers.html">Career</a></li>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="featues.html">Features</a></li>
+<li><a href="deposits.html">Deposits</a></li>
+
+</ul>
+
+<div class="nav-cta">
+<a href="login1.html">Login</a>
+</div>
+
+<div class="hamburger" onclick="openMenu()">
+<span></span><span></span><span></span>
+</div>
+
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+<div class="close-btn" onclick="closeMenu()">✕</div>
+
+<div class="mobile-item">
+
+  <a href="home.html" class="mobile-link">Home</a>
+
+  <span class="drop-icon" onclick="toggleDrop(this)">▾</span>
+
+</div>
+
+<div class="mobile-sub">
+  <a href="index.html">Home1</a>
+</div>
+
+
+<a href="carrers.html">Career</a>
+<a href="blog.html">Blog</a>
+<a href="featues.html">Features</a>
+<a href="deposits.html">Deposits</a>
+<a href="login1.html">Login</a>
+
+
+<!-- SOCIAL -->
+<div class="mobile-social">
+<h4>Follow Us</h4>
+<div class="social-icons">
+<a href="404.html">f</a>
+<a href="404.html">X</a>
+<a href="404.html">in</a>
+<a href="404.html">▶</a>
+</div>
+
+<div class="app-download">
+<h4>Download App</h4>
+<div class="store-btns">
+<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+</div>
+
+<div class="qr">
+<img src="qrcode.webp">
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+<script>
+function openMenu(){document.getElementById("mobileMenu").classList.add("active");}
+function closeMenu(){document.getElementById("mobileMenu").classList.remove("active");}
+function toggleDrop(el){let next=el.nextElementSibling;next.style.display=next.style.display==="block"?"none":"block";}
+
+/* typing title */
+const text="Stackly Banking Services";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,45);
+}}
+type();
+function toggleDrop(icon){
+  const submenu = icon.parentElement.nextElementSibling;
+
+  submenu.style.display =
+    submenu.style.display === "block" ? "none" : "block";
+
+  icon.classList.toggle("rotate");
+}
+
+</script>
+
+
+</body>
+</html>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{background:#f4f6fb;overflow-x:hidden}
+
+/* HERO */
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins, sans-serif;
+}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:55vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 20px 70px;
+
+  /* red black banking gradient */
+  background:linear-gradient(135deg,#000000,#8b0000 70%,#c40000);
+  color:white;
+}
+
+/* heading */
+.hero h1{
+  font-size:clamp(28px,5vw,52px);
+  line-height:1.15;
+  margin-bottom:14px;
+  letter-spacing:.5px;
+}
+
+/* paragraph */
+.hero p{
+  max-width:720px;
+  font-size:clamp(15px,2.3vw,18px);
+  line-height:1.7;
+  color:#f2f2f2;
+}
+
+/* ===== SECTION ===== */
+.section{
+  padding:70px 18px;
+  background:#f5f7fb;
+}
+
+/* title */
+.title{
+  text-align:center;
+  font-size:clamp(22px,4vw,34px);
+  color:#8b0000;
+  margin-bottom:40px;
+}
+
+/* ===== TABLET ===== */
+@media (max-width:900px){
+
+  .hero{
+    min-height:50vh;
+    padding:70px 18px 60px;
+  }
+
+  .hero p{
+    max-width:600px;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:600px){
+
+  .hero{
+    min-height:auto;
+    padding:65px 16px 55px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero p{
+    font-size:14.5px;
+    line-height:1.6;
+  }
+
+  .section{
+    padding:55px 14px;
+  }
+
+  .title{
+    font-size:24px;
+    margin-bottom:30px;
+  }
+}
+/* SECTION */
+.section{padding:80px 8%}
+.title{text-align:center;font-size:34px;margin-bottom:60px}
+
+/* IMAGE BLOCKS */
+.loan-block{
+display:flex;
+gap:50px;
+align-items:center;
+margin-bottom:80px;
+opacity:0;
+transform:translateY(80px);
+transition:1s;
+}
+.loan-block.show{opacity:1;transform:translateY(0)}
+
+.loan-block.reverse{flex-direction:row-reverse}
+
+.loan-img{flex:1}
+.loan-img img{
+width:100%;
+border-radius:18px;
+box-shadow:0 15px 35px rgba(0,0,0,.18);
+}
+
+.loan-text{flex:1}
+.loan-text h2{color:#d90429;margin-bottom:15px;font-size:30px}
+.loan-text p{color:#555;line-height:1.9;margin-bottom:15px}
+
+.features li{margin:6px 0;color:#444}
+
+.btn{
+display:inline-block;
+margin-top:12px;
+padding:12px 26px;
+background:#d90429;
+color:white;
+border-radius:30px;
+text-decoration:none;
+transition:.3s;
+}
+.btn:hover{background:black}
+
+/* EMI CALCULATOR */
+.calculator{
+margin-top:80px;
+background:white;
+padding:35px;
+border-radius:18px;
+max-width:520px;
+margin-left:auto;margin-right:auto;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+opacity:0;
+transform:translateY(80px);
+transition:1s;
+}
+.calculator.show{opacity:1;transform:translateY(0)}
+
+.calculator input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+.calc-btn{
+background:#d90429;color:white;padding:12px;border:none;border-radius:25px;width:100%;cursor:pointer;
+}
+.result{margin-top:15px;font-weight:600;text-align:center}
+
+/* ELIGIBILITY */
+.eligibility{
+margin-top:60px;
+background:white;
+padding:35px;
+border-radius:18px;
+max-width:520px;
+margin-left:auto;margin-right:auto;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+opacity:0;
+transform:translateY(80px);
+transition:1s;
+}
+.eligibility.show{opacity:1;transform:translateY(0)}
+
+.eligibility input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.loan-block{flex-direction:column}
+.loan-block.reverse{flex-direction:column}
+.hero h1{font-size:32px}
+.section{padding:70px 6%}
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+<h1>Stackly Digital Loans</h1>
+<p>Get instant loan approval with minimal documentation. Powered by AI risk assessment and fast online disbursal directly into your account.</p>
+</div>
+
+<section class="section">
+
+<h2 class="title">Our Loan Products</h2>
+
+<!-- PERSONAL LOAN -->
+
+<div class="loan-block">
+<div class="loan-img">
+<img src="personal.webp">
+</div>
+<div class="loan-text">
+<h2>Personal Loan</h2>
+<p>Instant unsecured loan for travel, medical emergencies, shopping or personal needs. Apply directly from the Stackly app.</p>
+<ul class="features">
+<li>Loan up to ₹5 Lakhs</li>
+<li>No collateral required</li>
+<li>Approval within minutes</li>
+<li>Flexible EMI options</li>
+</ul>
+<a class="btn" href="4041.html">Apply Now</a>
+</div>
+</div>
+
+<!-- HOME LOAN -->
+
+<div class="loan-block reverse">
+<div class="loan-img">
+<img src="homeloan.webp">
+</div>
+<div class="loan-text">
+<h2>Home Loan</h2>
+<p>Make your dream home a reality with low interest housing loans and long repayment tenure.</p>
+<ul class="features">
+<li>Loan up to ₹50 Lakhs</li>
+<li>Low interest rate</li>
+<li>20 year tenure</li>
+<li>Tax benefits available</li>
+</ul>
+<a class="btn" href="4041.html">Apply Now</a>
+</div>
+</div>
+
+<!-- EDUCATION LOAN -->
+
+<div class="loan-block">
+<div class="loan-img">
+<img src="educationlaon123.webp">
+</div>
+<div class="loan-text">
+<h2>Education Loan</h2>
+<p>Finance higher education in India and abroad including tuition fees and living expenses.</p>
+<ul class="features">
+<li>Covers course & hostel fees</li>
+<li>Moratorium period</li>
+<li>Affordable EMI after study</li>
+</ul>
+<a class="btn" href="4041.html">Apply Now</a>
+</div>
+</div>
+
+<!-- VEHICLE LOAN -->
+
+<div class="loan-block reverse">
+<div class="loan-img">
+<img src="Agriculture-Loan (1).webp">
+</div>
+<div class="loan-text">
+<h2>Agriculture Loan</h2>
+<p>Purchase your dream  land easily with fast approval and simple documentation.</p>
+<ul class="features">
+<li>Up to 90% vehicle funding</li>
+<li>Quick disbursal</li>
+<li>Affordable EMI</li>
+</ul>
+<a class="btn" href="4041.html">Apply Now</a>
+</div>
+</div>
+
+<!-- EMI CALCULATOR -->
+
+<div class="calculator">
+<h2 style="text-align:center;color:#d90429">EMI Calculator</h2>
+<input id="amount" placeholder="Loan Amount">
+<input id="rate" placeholder="Interest Rate %">
+<input id="months" placeholder="Tenure Months">
+<button class="calc-btn" onclick="calc()">Calculate EMI</button>
+<div class="result" id="result"></div>
+</div>
+
+<!-- ELIGIBILITY -->
+
+<div class="eligibility">
+<h2 style="text-align:center;color:#d90429">Check Eligibility</h2>
+<input id="salary" placeholder="Monthly Salary">
+<input id="age" placeholder="Age">
+<button class="calc-btn" onclick="check()">Check</button>
+<div class="result" id="eligibilityResult"></div>
+</div>
+
+</section>
+
+<script>
+/* EMI */
+function calc(){
+let P=+amount.value;
+let r=(+rate.value/12)/100;
+let n=+months.value;
+let emi=(P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+result.innerText="Estimated EMI: ₹"+Math.round(emi);
+}
+
+/* ELIGIBILITY */
+function check(){
+let salary=+document.getElementById("salary").value;
+let age=+document.getElementById("age").value;
+if(salary>20000 && age>=21 && age<=60){
+eligibilityResult.innerText="You are eligible ✔";
+}else{
+eligibilityResult.innerText="Not eligible currently";
+}
+}
+
+/* SCROLL REVEAL */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){entry.target.classList.add("show")}
+});
+},{threshold:0.25});
+
+document.querySelectorAll(".loan-block,.calculator,.eligibility").forEach(el=>{
+observer.observe(el);
+});
+</script>
+
+</body>
+</html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* WRAPPER */
+#stkly-support-strip{
+  font-family:Poppins, sans-serif;
+  background:#f1f1f1;
+  padding:28px 15px;
+}
+
+/* GRID */
+.stkly-support-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* ITEM */
+.stkly-support-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:white;
+  padding:18px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#0b1c3d;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+/* HOVER */
+.stkly-support-box:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+/* ICON CIRCLE */
+.stkly-icon{
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#e63946,#b3001b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.stkly-text h4{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.stkly-text p{
+  font-size:13px;
+  color:#666;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .stkly-support-container{
+    grid-template-columns:1fr;
+  }
+
+  .stkly-support-box{
+    padding:16px;
+  }
+
+  .stkly-icon{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
+
+  .stkly-text h4{
+    font-size:16px;
+  }
+}
+
+</style>
+</head>
+<body>
+<section class="campaign-hero">
+
+  <div class="campaign-container">
+
+      <!-- LEFT SIDE -->
+      <div class="campaign-left">
+
+          <div class="campaign-badge">
+              <span>STACKLY BANK</span>
+              <strong>FRAUD PATROL</strong>
+          </div>
+
+          <h1>Let’s Make India<br>Fraud Free</h1>
+
+          <p class="campaign-sub">
+              Stay Safe, Stay Alert and protect your banking information.
+          </p>
+
+          <div class="campaign-buttons">
+              <a href="4041.html" class="btn-blue">Know More</a>
+              <a href="4041.html" class="btn-dark">Chat Now</a>
+          </div>
+
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="campaign-right">
+          <img src="digital-banking.webp">
+      </div>
+
+  </div>
+
+</section>
+<style>
+/* FULL WIDTH HERO */
+.campaign-hero{
+width:100%;
+background:#6ec6c6;
+padding:70px 0 0;
+position:relative;
+overflow:hidden;
+margin top:20px;
+}
+
+/* CONTAINER */
+.campaign-container{
+max-width:1250px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:30px;
+padding:0 40px;
+}
+
+/* LEFT CONTENT */
+.campaign-left{
+max-width:520px;
+z-index:2;
+}
+
+.campaign-badge{
+background:#0f4c81;
+color:#fff;
+display:inline-block;
+padding:10px 18px;
+border-radius:30px;
+margin-bottom:20px;
+font-size:14px;
+}
+.campaign-badge strong{
+display:block;
+font-size:18px;
+letter-spacing:1px;
+}
+
+.campaign-left h1{
+font-size:48px;
+line-height:1.2;
+color:#083344;
+margin-bottom:15px;
+}
+
+.campaign-sub{
+font-size:18px;
+color:#083344;
+margin-bottom:25px;
+}
+
+/* BUTTONS */
+.campaign-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn-blue{
+background:#0b5ed7;
+color:#fff;
+padding:14px 26px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+.btn-dark{
+background:#134074;
+color:#fff;
+padding:14px 26px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+/* RIGHT IMAGE */
+.campaign-right{
+position:relative;
+flex:1;
+display:flex;
+align-items:flex-end;
+justify-content:flex-end;
+}
+
+.campaign-right img{
+max-height:480px;
+object-fit:contain;
+margin-bottom:-5px;   /* image touches bottom like poster */
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+
+.campaign-container{
+flex-direction:column;
+text-align:center;
+padding:0 20px;
+}
+
+.campaign-left h1{
+font-size:30px;
+}
+
+.campaign-sub{
+font-size:15px;
+}
+
+.campaign-buttons{
+justify-content:center;
+}
+
+.campaign-right img{
+max-height:320px;
+margin-top:20px;
+}
+
+}
+</style>
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  
+</div>
+
+</section>
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  
+
+  
+
+</div>
+
+</section>
+<section class="sb-app-strip">
+
+    <div class="sb-app-container">
+
+        <!-- TEXT -->
+        <div class="sb-app-text">
+            <h1>Seamless Mobile<br>Banking</h1>
+        </div>
+
+        <!-- QR CODE -->
+        <div class="sb-app-qr">
+            <img src="qrcode.webp">
+        </div>
+
+    </div>
+
+</section>
+<style>
+  /* FULL STRIP */
+.sb-app-strip{
+width:100%;
+background:#f2f2f4;
+padding:90px 20px;
+}
+
+/* CONTAINER */
+.sb-app-container{
+max-width:1250px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:40px;
+flex-wrap:wrap;
+}
+
+/* TEXT */
+.sb-app-text h1{
+font-size:90px;
+line-height:1.05;
+font-weight:500;
+color:#e56a2e;
+}
+
+/* QR */
+.sb-app-qr{
+background:#fff;
+padding:14px;
+border-radius:6px;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.sb-app-qr img{
+width:220px;
+height:220px;
+display:block;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+.sb-app-container{
+flex-direction:column;
+text-align:center;
+}
+
+.sb-app-text h1{
+font-size:42px;
+}
+
+.sb-app-qr img{
+width:180px;
+height:180px;
+}
+
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* WRAPPER */
+#stkly-support-strip{
+  font-family:Poppins, sans-serif;
+  background:#f1f1f1;
+  padding:28px 15px;
+}
+
+/* GRID */
+.stkly-support-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+/* ITEM */
+.stkly-support-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:white;
+  padding:18px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#0b1c3d;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+/* HOVER */
+.stkly-support-box:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+/* ICON CIRCLE */
+.stkly-icon{
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#e63946,#b3001b);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.stkly-text h4{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.stkly-text p{
+  font-size:13px;
+  color:#666;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .stkly-support-container{
+    grid-template-columns:1fr;
+  }
+
+  .stkly-support-box{
+    padding:16px;
+  }
+
+  .stkly-icon{
+    width:55px;
+    height:55px;
+    font-size:22px;
+  }
+
+  .stkly-text h4{
+    font-size:16px;
+  }
+}
+
+</style>
+</head>
+<section class="deposits">
+
+<h2 class="dep-title">Stackly Deposit Accounts</h2>
+<p class="dep-sub">
+Secure your savings and grow your wealth with our high-interest digital deposit plans.
+</p>
+
+<div class="dep-container">
+
+  <div class="dep-card reveal">
+    <h3>Savings Account</h3>
+    <p>
+      Open a zero-balance digital savings account in minutes. 
+      Earn attractive interest, UPI access, debit card and 24/7 mobile banking.
+    </p>
+  </div>
+
+  <div class="dep-card reveal">
+    <h3>Fixed Deposit (FD)</h3>
+    <p>
+      Invest once and earn guaranteed returns. Flexible tenure from 7 days to 10 years 
+      with higher interest rates and auto-renewal facility.
+    </p>
+  </div>
+
+  <div class="dep-card reveal">
+    <h3>Recurring Deposit (RD)</h3>
+    <p>
+      Save a small amount every month and build disciplined savings. 
+      Ideal for salary earners and students planning future goals.
+    </p>
+  </div>
+
+</div>
+
+</section>
+<style>
+  /* ===== DEPOSITS SECTION ===== */
+
+.deposits{
+background:linear-gradient(135deg,#000000,#8b0000 70%,#c40000);
+color:white;
+padding:80px 20px;
+text-align:center;
+}
+
+/* title */
+.dep-title{
+font-size:clamp(26px,4.5vw,38px);
+margin-bottom:10px;
+}
+
+/* subtitle */
+.dep-sub{
+max-width:700px;
+margin:0 auto 50px;
+color:#f1f1f1;
+font-size:clamp(14px,2.3vw,17px);
+line-height:1.6;
+}
+
+/* card layout */
+.dep-container{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+/* card */
+.dep-card{
+background:white;
+color:#111;
+padding:28px 22px;
+border-radius:16px;
+box-shadow:0 15px 40px rgba(0,0,0,.35);
+transition:.35s;
+opacity:0;
+transform:translateY(60px);
+}
+
+/* hover */
+.dep-card:hover{
+transform:translateY(-8px);
+}
+
+/* text */
+.dep-card h3{
+color:#8b0000;
+margin-bottom:10px;
+font-size:20px;
+}
+
+.dep-card p{
+font-size:14.5px;
+line-height:1.6;
+color:#444;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:900px){
+.dep-container{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:600px){
+.dep-container{
+grid-template-columns:1fr;
+gap:18px;
+}
+.deposits{
+padding:70px 16px;
+}
+}
+
+</style>
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+  const windowHeight = window.innerHeight;
+
+  reveals.forEach(el=>{
+    const elementTop = el.getBoundingClientRect().top;
+
+    if(elementTop < windowHeight - 80){
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+      el.style.transition = "all .7s ease";
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+</script>
+<body>
+
+<section id="stkly-support-strip">
+
+<div class="stkly-support-container">
+
+  <!-- FEEDBACK -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-note-sticky"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Add a note of appreciation</h4>
+      <p>Share your experience with our banking services</p>
+    </div>
+  </a>
+
+  <!-- SUPPORT -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-solid fa-phone"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Customer Support</h4>
+      <p>Talk with our 24/7 banking help desk</p>
+    </div>
+  </a>
+
+  <!-- BRANCH -->
+  <a href="4041.html" class="stkly-support-box">
+    <div class="stkly-icon">
+      <i class="fa-regular fa-map"></i>
+    </div>
+    <div class="stkly-text">
+      <h4>Locate nearest branch</h4>
+      <p>Find ATM & bank branches near you</p>
+    </div>
+  </a>
+
+</div>
+
+</section>
+
+<style>
+/* ===== FOOTER ===== */
+#stackly-footer{
+  background:#c40000;
+  color:#e5e7eb;
+  padding-top:80px;
+  font-family:'Poppins',sans-serif;
+  margin-top: 30px;
+}
+
+/* CONTAINER */
+.stackly-footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 80px 60px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+/* LOGO IMAGE */
+.stackly-footer-logo img{
+  width:160px;
+  height:auto;
+  display:block;
+  margin-bottom:16px;
+  filter:brightness(0) invert(1); /* REMOVE if logo already white */
+}
+
+/* TEXT */
+.stackly-footer-col p{
+  font-size:15px;
+  line-height:1.7;
+  color:white;
+  margin-bottom:16px;
+}
+
+/* HEADINGS */
+.stackly-footer-col h3{
+  margin-bottom:18px;
+  color:#ffffff;
+}
+
+/* LINKS */
+.stackly-footer-col ul{
+  list-style:none;
+  padding:0;
+}
+
+.stackly-footer-col ul li{
+  margin-bottom:12px;
+}
+
+.stackly-footer-col ul li a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.stackly-footer-col ul li a:hover{
+  color:#ffffff;
+  padding-left:6px;
+}
+
+/* SOCIAL ICONS */
+.stackly-footer-social{
+  display:flex;
+  gap:14px;
+  margin-top:20px;
+}
+
+.stackly-footer-social a{
+  width:40px;
+  height:40px;
+  background:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.stackly-footer-social svg{
+  width:18px;
+  height:18px;
+  fill:blue;
+}
+
+.stackly-footer-social a:hover{
+  background:white;
+  transform:translateY(-4px);
+}
+
+.stackly-footer-social a:hover svg{
+  fill:#0284c7;
+}
+
+/* SUBSCRIBE */
+.stackly-footer-subscribe{
+  display:flex;
+  gap:10px;
+}
+
+.stackly-footer-subscribe input{
+  flex:1;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+
+.stackly-footer-subscribe button{
+  padding:12px 18px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  color:#0f172a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* CONTACT BAR */
+.stackly-footer-contactbar{
+  text-align:center;
+  padding:16px;
+  background:rgba(0,0,0,.25);
+}
+
+.stackly-footer-contactbar a{
+  color:white;
+  margin-left:6px;
+  text-decoration:none;
+}
+
+/* BOTTOM */
+.stackly-footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 80px;
+  font-size:14px;
+  background:rgba(0,0,0,.35);
+}
+
+.stackly-footer-legal{
+  display:flex;
+  gap:20px;
+}
+
+.stackly-footer-legal a{
+  color:#cbd5f5;
+  text-decoration:none;
+}
+
+.stackly-footer-legal a:hover{
+  color:#ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stackly-footer-container{
+    grid-template-columns:1fr;
+    padding:0 32px 50px;
+  }
+
+  .stackly-footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    padding:16px 32px;
+  }
+
+  .stackly-footer-logo img{
+    width:140px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<footer id="stackly-footer">
+
+  <div class="stackly-footer-container">
+
+    <!-- LOGO + ABOUT -->
+    <div class="stackly-footer-col">
+      <div class="stackly-footer-logo">
+        <!-- CHANGE LOGO PATH -->
+       <a href="home.html"><img src="stacklylogo (3).webp" alt="Stackly Logo"></a> 
+      </div>
+
+      <p>
+        Delivering innovative digital solutions that empower
+        businesses to grow, scale, and succeed.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="stackly-footer-social">
+
+        <!-- FACEBOOK -->
+        <a href="4041.html" aria-label="Facebook">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+
+        <!-- TWITTER -->
+        <a href="4041.html" aria-label="Twitter">
+          <svg viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.6 8.6 0 0 1-2.72 1.04A4.28 4.28 0 0 0 11.1 8.1a12.15 12.15 0 0 1-8.82-4.47 4.28 4.28 0 0 0 1.32 5.72A4.2 4.2 0 0 1 2 8.8v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 18.57 12.13 12.13 0 0 0 8.29 20.5c7.55 0 11.68-6.26 11.68-11.68v-.53A8.3 8.3 0 0 0 22.46 6z"/>
+          </svg>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="4041.html" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 8.98h4v12H3zM9 8.98h3.8v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.05 0 4.8 2.66 4.8 6.12v6.34h-4v-5.62c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.72H9z"/>
+          </svg>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="4041.html" aria-label="Instagram">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm4.8-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="stackly-footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+<li><a href="carrers.html">Career</a></li>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="featues.html">Features</a></li>
+<li><a href="deposits.html">Deposits</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="stackly-footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="4041.html">Banking </a></li>
+        <li><a href="4041.html">Mobile Banking</a></li>
+        <li><a href="4041.html">Payment Solutions</a></li>
+        <li><a href="4041.html">AI & Automation</a></li>
+        <li><a href="4041.html">Security</a></li>
+      </ul>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="stackly-footer-col">
+  <h3>Subscribe</h3>
+  <p>Get updates and insights delivered to your inbox.</p>
+
+  <form class="stackly-footer-subscribe" id="subscribeForm">
+    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="stackly-footer-contactbar">
+    Contact us: <a href="mailto:info@stackly.com">info@stackly.com</a>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="stackly-footer-bottom">
+    <span>© 2026 Stackly. All Rights Reserved.</span>
+    <div class="stackly-footer-legal">
+      <a href="4041.html">Privacy Policy</a>
+      <a href="4041.html">Terms & Conditions</a>
+    </div>
+  </div>
+
+</footer>
+<script>
+
+document.getElementById("subscribeForm").addEventListener("submit", function(e){
+
+    // stop normal form submit (page refresh)
+    e.preventDefault();
+
+    var email = document.getElementById("subscribeEmail").value.trim();
+
+    // email validation
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email === ""){
+        alert("Please enter email address");
+        return;
+    }
+
+    if(emailPattern.test(email)){
+        // redirect to 404 page
+        window.location.href = "4041.html";
+    }
+    else{
+        alert("Enter valid email address");
+    }
+
+});
+
+</script>
+
+</body>
+</html>

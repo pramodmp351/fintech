@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found - Stackly Bank</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+/* ===== BODY WITH BACKGROUND IMAGE ===== */
+body{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+position:relative;
+overflow:hidden;
+
+/* banking background + red overlay */
+background:
+linear-gradient(rgba(139,0,0,.78), rgba(196,0,0,.88)),
+url("hero3.webp");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+
+/* floating circles */
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,.12);
+animation:move 10s linear infinite;
+}
+
+.c1{width:180px;height:180px;top:8%;left:8%;}
+.c2{width:130px;height:130px;bottom:15%;right:12%;}
+.c3{width:90px;height:90px;top:65%;left:70%;}
+
+@keyframes move{
+0%{transform:translateY(0)}
+50%{transform:translateY(-25px)}
+100%{transform:translateY(0)}
+}
+
+/* ===== GLASS CONTAINER ===== */
+.container{
+max-width:700px;
+padding:30px 26px;
+border-radius:18px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+box-shadow:0 12px 45px rgba(0,0,0,.4);
+}
+
+/* 404 NUMBER */
+.code{
+font-size:140px;
+font-weight:700;
+letter-spacing:6px;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+100%{transform:translateY(0)}
+}
+
+/* TEXT */
+h1{
+font-size:32px;
+margin-top:10px;
+}
+
+p{
+margin:15px 0 30px;
+color:#ffeaea;
+line-height:1.6;
+}
+
+/* BUTTONS */
+.buttons{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.buttons a{
+display:inline-block;
+padding:13px 26px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.home{
+background:white;
+color:#8b0000;
+}
+
+.support{
+border:2px solid white;
+color:white;
+}
+
+.home:hover{background:#ffdede}
+.support:hover{background:white;color:#8b0000}
+
+/* ===== MOBILE ===== */
+@media(max-width:700px){
+
+body{
+background-attachment:scroll;
+padding:18px;
+}
+
+.code{font-size:85px;letter-spacing:3px;}
+h1{font-size:24px;}
+p{font-size:14px;}
+
+.buttons a{
+width:100%;
+max-width:260px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- decorative circles -->
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+
+<div class="container">
+
+<div class="code">404</div>
+
+<h1>Oops! Page Not Found</h1>
+
+<p>
+The banking service you are trying to access is unavailable or the link is incorrect.
+You will be redirected to the homepage shortly.
+</p>
+
+<div class="buttons">
+<a href="index.html" class="home">← Go to Home</a>
+
+</div>
+
+</div>
+
+<!-- AUTO REDIRECT -->
+<script>
+setTimeout(function(){
+window.location.href="index.html";
+},6000);
+</script>
+
+</body>
+</html>
